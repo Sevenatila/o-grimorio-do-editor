@@ -1,5 +1,11 @@
 # Primeira auditoria — 28/10/2026
 
+## Setas da interface em SVG — 28/10/2026
+
+- Substituídas as setas Unicode dos CTAs, link do canal, expansão de feedback e navegação dos carrosséis por um componente SVG com traço na cor do elemento. A apresentação não depende de glifos de emoji do sistema.
+- `npm run build` e `npm run qa`: aprovados em 390, 768 e 1440px, incluindo navegação do acervo e feedbacks. Os SVGs são decorativos, com `aria-hidden` e sem receber foco; os nomes acessíveis dos controles continuam descrevendo suas ações.
+- Capturas atualizadas em `docs/screenshots/one-click/layout/`.
+
 ## Reprodução com uma ação do usuário — 28/10/2026
 
 - O destaque é preparado antes do clique; o acervo usa iframe com `loading="lazy"`. A API oficial recebe `playVideo()` no clique/toque, com o iframe já exibido. Um pedido feito antes de `onReady` é executado assim que o player fica pronto. O carregamento inicial usa `autoplay=0`; não foi adicionado silenciamento automático.

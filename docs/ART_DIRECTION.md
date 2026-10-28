@@ -31,6 +31,7 @@ Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes
 - A partir de 1050px: header com navegação exposta; hero editorial em duas colunas; Jornada com texto e gravura; habilidades em três colunas; contato com cena lateral. Área máxima: 1320px.
 - Capitulares D/A/O/F/V em caixas bordô de 68–84px; primeira letra real da frase. O título do arsenal inclui espaço após o O. Sem marcadores romanos.
 - Ornamentos restritos aos cantos, capitulares e divisórias. Textura SVG suave, sem moldura grande que ocupe a área dos vídeos.
+- Setas de CTAs, links e navegação são SVGs de traço fino com `currentColor`, em vez de caracteres que possam receber aparência de emoji no sistema.
 
 ## Mídia e conteúdo
 

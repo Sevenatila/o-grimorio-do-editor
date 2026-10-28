@@ -1,3 +1,8 @@
+export function ArrowIcon({ direction = 'up-right' }: { direction?: 'left' | 'right' | 'up-right' }) {
+  const paths = { left: 'M19 12H5m6-6-6 6 6 6', right: 'M5 12h14m-6-6 6 6-6 6', 'up-right': 'M6 18 18 6M6 6h12v12' }
+  return <svg className="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={paths[direction]}/></svg>
+}
+
 export function Flourish({ className = '' }: { className?: string }) {
   return <svg className={`flourish ${className}`} viewBox="0 0 300 42" fill="none" aria-hidden="true"><path d="M8 21h94c23 0 29-16 48-16s25 16 48 16h94M90 21c19 0 24 15 40 15 12 0 20-15 20-15s8 15 20 15c16 0 21-15 40-15M138 21l12-12 12 12-12 12Z" stroke="currentColor"/><path d="M17 21c-16-22 37-20 25 0-9 14-30 4-21-3M283 21c16-22-37-20-25 0 9 14 30 4 21-3" stroke="currentColor"/></svg>
 }

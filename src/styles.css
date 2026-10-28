@@ -10,6 +10,10 @@
 .video-caption h3{overflow-wrap:anywhere}
 .gallery-controls{gap:16px}
 .gallery-dots button{width:26px}
+.arrow-icon{display:inline-block;width:20px;height:20px;flex-shrink:0;vertical-align:middle}
+.round-button .arrow-icon{width:22px;height:22px}
+.text-link .arrow-icon{width:15px;height:15px;margin-inline-start:4px}
+.feedback-preview .arrow-icon{width:14px;height:14px}
 
 .section{background-image:linear-gradient(#e8d7b34d,#e8d7b34d),url('/assets/art/parchment.webp');background-size:auto,768px;background-blend-mode:normal,multiply}
 .journey-art img{height:auto;opacity:1;mask-image:linear-gradient(180deg,transparent,#000 8%,#000 92%,transparent)}

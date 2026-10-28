@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { testimonials, type Testimonial } from '../data/content'
-import { FrameCorners } from './Ornaments'
+import { ArrowIcon, FrameCorners } from './Ornaments'
 import { SectionHeading } from './SectionHeading'
 import './testimonials.css'
 
@@ -54,14 +54,14 @@ export function Testimonials() {
         <FrameCorners/>
         <button className="feedback-preview" onClick={() => openFeedback(testimonial)} aria-label={`Ampliar feedback ${index + 1}`} aria-haspopup="dialog">
           <img src={testimonial.image} alt={testimonial.alt} loading="lazy" width="1080" height="1440"/>
-          <span>Ver conversa completa <span aria-hidden="true">↗</span></span>
+          <span>Ver conversa completa <ArrowIcon/></span>
         </button>
       </article>)}
     </div>
     <div className="gallery-controls feedback-controls">
-      <button className="round-button" aria-label="Feedback anterior" aria-controls="feedback-track" disabled={active === 0} onClick={() => navigate(-1)}>←</button>
+      <button className="round-button" aria-label="Feedback anterior" aria-controls="feedback-track" disabled={active === 0} onClick={() => navigate(-1)}><ArrowIcon direction="left"/></button>
       <span className="feedback-count" aria-live="polite">{active + 1} de {testimonials.length}</span>
-      <button className="round-button" aria-label="Próximo feedback" aria-controls="feedback-track" disabled={atEnd} onClick={() => navigate(1)}>→</button>
+      <button className="round-button" aria-label="Próximo feedback" aria-controls="feedback-track" disabled={atEnd} onClick={() => navigate(1)}><ArrowIcon direction="right"/></button>
     </div>
     <dialog ref={dialogRef} className="feedback-dialog" aria-labelledby="feedback-dialog-title" onClick={event => { if (event.target === event.currentTarget) dialogRef.current?.close() }} onClose={() => setSelected(null)}>
       <div className="feedback-dialog-header"><h3 id="feedback-dialog-title">Feedback do cliente</h3><button className="round-button" aria-label="Fechar feedback ampliado" autoFocus onClick={() => dialogRef.current?.close()}>×</button></div>
