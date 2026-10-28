@@ -10,7 +10,9 @@ npm run build
 
 Acesse o endereço exibido pelo Vite (padrão http://127.0.0.1:5173). O build estático fica em `dist/`.
 
-Conteúdo e projetos: `src/data/content.ts`. Configure `.env` a partir de `.env.example`: `VITE_WHATSAPP_NUMBER` com DDI/DDD e `VITE_DEMOREEL_URL` com arquivo local público ou URL de vídeo direta. URLs de páginas YouTube não são fontes HTML5 Video; forneça um MP4/WebM autorizado. Para cada projeto, preencha `src`, `poster` e, quando disponível, `captions` com WebVTT. Os seletores de arquivo permitem experimentar os players localmente sem enviar mídia ao servidor.
+Conteúdo e projetos: `src/data/content.ts`. Os seis Shorts enviados estão em `selectedVideos`, com títulos oficiais e miniaturas locais em `public/assets/videos/`. O destaque inicial usa `9FwdP60SSpc`, conforme a seleção do usuário. O YouTube é carregado ao clicar, com controles e tela cheia; há também um link para abrir o vídeo no YouTube. O acervo preserva a ordem enviada e usa proporção vertical 9:16.
+
+Configure `.env` a partir de `.env.example`: `VITE_WHATSAPP_NUMBER` com DDI/DDD e, opcionalmente, `VITE_DEMOREEL_URL` com arquivo local público ou URL direta de vídeo para substituir o YouTube no destaque inicial. Para novos projetos, use `youtubeId` para vídeos YouTube, ou `src` para MP4/WebM, `poster` e, quando disponível, `captions` com WebVTT. Sem fonte configurada, o player HTML5 continua permitindo experimentar um arquivo local sem upload.
 
 Fontes Google e GSAP/ScrollTrigger via CDN exigem conexão; sem ela, a página mantém fontes serifadas de fallback e conteúdo estático. GSAP deve passar para import local depois de instalado em um ambiente com acesso ao npm. As dependências do build desta execução foram recuperadas de instalações locais, pois a rede foi bloqueada; não foi possível gerar lockfile pelo registro.
 

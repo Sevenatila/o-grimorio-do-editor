@@ -6,7 +6,28 @@ export type Project = {
   src?: string
   poster: string
   captions?: string
+  youtubeId?: string
+  format?: 'portrait'
 }
+
+const selectedVideos = [
+  { id: 'oF7MRtebWHs', title: 'Reunião e Cowork - Singlr' },
+  { id: '9FwdP60SSpc', title: 'O Grimório do Editor - Marcos' },
+  { id: 'QstQJOrkq2k', title: 'Profissão Closer Digital - Jesse' },
+  { id: 'rwz_finz-Y0', title: 'Closer Digital - Jesse' },
+  { id: 'fCXZFommLOA', title: 'O que está mudando no sistema tributário brasileiro - TributeBem' },
+  { id: 'bnOoqp2OafA', title: 'Cronograma e Fases de Transição - TributeBem' },
+]
+
+export const projects: Project[] = selectedVideos.map(({ id, title }) => ({
+  id: `youtube-${id}`,
+  youtubeId: id,
+  title,
+  category: 'Shorts',
+  description: '',
+  poster: `/assets/videos/${id}.jpg`,
+  format: 'portrait',
+}))
 
 export const site = {
   name: 'O Grimório do Editor',
@@ -17,7 +38,7 @@ export const site = {
   hero: {
     title: 'Estratégia, estética e emoção em cada quadro.',
     description: 'Edição de vídeos que transformam ideias em histórias que prendem, conectam e geram resultados.',
-    video: { id: 'demoreel', title: 'Demoreel', category: 'Apresentação', description: 'Vídeo de apresentação pendente. Selecione um arquivo para experimentar o player.', src: import.meta.env.VITE_DEMOREEL_URL || '', poster: '/assets/editor-scene.svg' } as Project,
+    video: { ...projects[1], id: 'demoreel', category: 'Apresentação', src: import.meta.env.VITE_DEMOREEL_URL || '' } as Project,
   },
   journey: [
     'Toda grande história tem um começo. A minha começou lá em 2024, editando vídeos para a loja de açaí de um amigo. O que era para ser apenas uma ajuda rápida me fez descobrir o verdadeiro poder do audiovisual: eu vi, na prática, como um vídeo bem feito era capaz de trazer clientes reais para o balcão.',
@@ -33,12 +54,6 @@ export const navigation = [
   { id: 'grimorio', label: 'O Grimório' },
   { id: 'feedbacks', label: 'Feedbacks' },
   { id: 'epilogo', label: 'A Sua História' },
-]
-
-export const projects: Project[] = [
-  { id: 'redes', title: 'Histórias que conectam', category: 'Redes Sociais', description: 'Espaço demonstrativo para um projeto de redes sociais. Vídeo, cliente e descrição aguardam seleção.', poster: '/assets/editor-scene.svg' },
-  { id: 'institucional', title: 'A essência de uma marca', category: 'Institucional', description: 'Espaço demonstrativo para um filme institucional. Nenhuma campanha real foi atribuída a este espaço.', poster: '/assets/city-scene.svg' },
-  { id: 'comercial', title: 'Cada quadro, uma intenção', category: 'Comercial', description: 'Espaço demonstrativo para um projeto comercial. Substituir pelos materiais aprovados do acervo.', poster: '/assets/epilogue-scene.svg' },
 ]
 
 export const skills = [

@@ -34,9 +34,13 @@ Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes
 
 ## Mídia e conteúdo
 
-SVGs locais são ilustrações provisórias, não imagens finais do cliente. Os 15 prints recebidos em `public/assets/testimonials/` são exibidos no carrossel de feedbacks, com ampliação dos originais. Não se deduzem nomes, empresas ou notas a partir de contexto ambíguo. A inclusão dos prints foi solicitada explicitamente pelo usuário. O acervo de três slots é demonstrativo; categorias refletem os slots, não trabalhos confirmados. Não foi possível extrair os vídeos do canal por bloqueio de rede.
+SVGs locais são ilustrações provisórias, não imagens finais do cliente. Os 15 prints recebidos em `public/assets/testimonials/` são exibidos no carrossel de feedbacks, com ampliação dos originais. Não se deduzem nomes, empresas ou notas a partir de contexto ambíguo. A inclusão dos prints foi solicitada explicitamente pelo usuário.
 
-Players HTML5 com poster, controles nativos, preload none, carregamento de arquivo local sem upload, erro legível e pausa de outros players. Configurar fontes em `src/data/content.ts`. Adicionar legendas WebVTT aos vídeos definitivos pelo campo `captions`.
+O acervo agora contém os seis Shorts enviados pelo usuário, na ordem recebida. O vídeo `9FwdP60SSpc` é o destaque inicial por escolha explícita. Títulos e miniaturas foram consultados no oEmbed oficial do YouTube em 28/10/2026; miniaturas preservadas em `public/assets/videos/`. Categoria factual: Shorts. Não foram criados clientes, resultados nem descrições adicionais a partir dos títulos.
+
+O destaque mantém a moldura horizontal; o acervo usa moldura vertical 9:16, centralizada e com largura máxima de 360px. O iframe do YouTube só é montado após clique, com controles e tela cheia. Abrir outro player desmonta o iframe anterior para interromper a reprodução. Cada vídeo tem link direto para o YouTube. Integração conforme a [documentação oficial de players incorporados](https://developers.google.com/youtube/player_parameters).
+
+Players HTML5 continuam disponíveis para fontes MP4/WebM, com poster, controles nativos, preload none, carregamento de arquivo local sem upload e erro legível. Configurar mídias em `src/data/content.ts`. Adicionar legendas WebVTT pelo campo `captions` quando usar arquivos diretos; no YouTube, as legendas dependem do vídeo original.
 
 WhatsApp depende de `VITE_WHATSAPP_NUMBER`. Sem número, o CTA apresenta aviso de disponibilidade futura. Não há número fictício.
 

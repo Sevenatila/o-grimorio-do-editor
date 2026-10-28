@@ -14,7 +14,7 @@
     "fontSource": "fallback",
     "loadedFontFaces": [],
     "heroVideo": 122,
-    "heroText": 348.25,
+    "heroText": 398,
     "errors": [],
     "order": [
       "hero",
@@ -26,7 +26,18 @@
     ],
     "controls": "passed",
     "feedbackImages": 15,
-    "feedbackModalAndNavigation": "passed"
+    "feedbackModalAndNavigation": "passed",
+    "youtubeIntegration": "passed",
+    "youtubeIds": [
+      "oF7MRtebWHs",
+      "9FwdP60SSpc",
+      "QstQJOrkq2k",
+      "rwz_finz-Y0",
+      "fCXZFommLOA",
+      "bnOoqp2OafA"
+    ],
+    "presentationId": "9FwdP60SSpc",
+    "youtubeNetwork": "External HTTPS blocked deliberately; playback not checked by this offline audit."
   },
   {
     "width": 768,
@@ -43,7 +54,7 @@
     "fontSource": "fallback",
     "loadedFontFaces": [],
     "heroVideo": 148.78125,
-    "heroText": 571.453125,
+    "heroText": 603.453125,
     "errors": [],
     "order": [
       "hero",
@@ -55,7 +66,18 @@
     ],
     "controls": "passed",
     "feedbackImages": 15,
-    "feedbackModalAndNavigation": "passed"
+    "feedbackModalAndNavigation": "passed",
+    "youtubeIntegration": "passed",
+    "youtubeIds": [
+      "oF7MRtebWHs",
+      "9FwdP60SSpc",
+      "QstQJOrkq2k",
+      "rwz_finz-Y0",
+      "fCXZFommLOA",
+      "bnOoqp2OafA"
+    ],
+    "presentationId": "9FwdP60SSpc",
+    "youtubeNetwork": "External HTTPS blocked deliberately; playback not checked by this offline audit."
   },
   {
     "width": 1440,
@@ -71,7 +93,7 @@
     "skills": 7,
     "fontSource": "fallback",
     "loadedFontFaces": [],
-    "heroVideo": 233.015625,
+    "heroVideo": 217.015625,
     "heroText": 198,
     "errors": [],
     "order": [
@@ -84,10 +106,17 @@
     ],
     "controls": "passed",
     "feedbackImages": 15,
-    "feedbackModalAndNavigation": "passed"
-  },
-  {
-    "videoUploadAndPlayback": "passed",
-    "media": "Synthetic QA-only canvas recording, not a portfolio asset."
+    "feedbackModalAndNavigation": "passed",
+    "youtubeIntegration": "passed",
+    "youtubeIds": [
+      "oF7MRtebWHs",
+      "9FwdP60SSpc",
+      "QstQJOrkq2k",
+      "rwz_finz-Y0",
+      "fCXZFommLOA",
+      "bnOoqp2OafA"
+    ],
+    "presentationId": "9FwdP60SSpc",
+    "youtubeNetwork": "External HTTPS blocked deliberately; playback not checked by this offline audit."
   }
 ]

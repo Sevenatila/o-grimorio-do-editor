@@ -9,6 +9,7 @@ console.log('Launching Chromium')
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: true, timeout: 20000 })
 console.log('Browser ready')
 const results = []
+const youtubeIds = ['oF7MRtebWHs', '9FwdP60SSpc', 'QstQJOrkq2k', 'rwz_finz-Y0', 'fCXZFommLOA', 'bnOoqp2OafA']
 try {
   for (const width of [390, 768, 1440]) {
     const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' })
@@ -35,10 +36,37 @@ try {
       assert.equal(await menu.getAttribute('aria-expanded'), 'false')
       assert.ok(await menu.evaluate(element => element === document.activeElement))
     }
-    await page.getByRole('button', { name: 'Próximo projeto', exact: true }).click()
-    await page.getByRole('heading', { name: 'A essência de uma marca' }).waitFor()
-    await page.getByRole('button', { name: 'Comercial', exact: true }).click()
-    await page.getByRole('heading', { name: 'Cada quadro, uma intenção' }).waitFor()
+    assert.equal(await page.locator('iframe').count(), 0, 'YouTube loads only after a click')
+    await page.getByRole('link', { name: 'Assista ao demoreel' }).click()
+    const heroFrame = page.locator('.hero-video iframe')
+    await heroFrame.waitFor({ state: 'attached' })
+    assert.match(await heroFrame.getAttribute('src'), /\/embed\/9FwdP60SSpc\?/)
+    assert.equal(await heroFrame.getAttribute('referrerpolicy'), 'strict-origin-when-cross-origin')
+    assert.ok(await heroFrame.evaluate(element => element === document.activeElement))
+    assert.equal(await page.locator('.gallery-dots button').count(), 6)
+    const gallery = page.locator('.portfolio-stage')
+    for (const id of youtubeIds) {
+      const thumbnail = gallery.locator('.youtube-launch img')
+      await thumbnail.scrollIntoViewIfNeeded()
+      await thumbnail.evaluate(element => element.decode())
+      assert.match(await thumbnail.getAttribute('src'), new RegExp(`${id}\\.jpg$`))
+      assert.equal(await gallery.getByRole('link', { name: 'Abrir no YouTube' }).getAttribute('href'), `https://www.youtube.com/shorts/${id}`)
+      const playerDimensions = await gallery.locator('.youtube-player').boundingBox()
+      assert.ok(Math.abs(playerDimensions.width / playerDimensions.height - 9 / 16) < .01, 'Portrait player keeps the 9:16 ratio')
+      assert.ok(playerDimensions.width >= 200 && playerDimensions.height >= 200)
+      await gallery.getByRole('button', { name: /^Reproduzir / }).click()
+      const frame = gallery.locator('iframe')
+      await frame.waitFor({ state: 'attached' })
+      assert.match(await frame.getAttribute('src'), new RegExp(`^https://www\\.youtube-nocookie\\.com/embed/${id}\\?`))
+      assert.equal(await page.locator('.hero-video iframe').count(), 0, 'Starting a gallery video stops the presentation')
+      await page.getByRole('button', { name: 'Próximo projeto', exact: true }).click()
+      assert.equal(await gallery.locator('iframe').count(), 0, 'Changing projects removes the previous player')
+    }
+    await page.getByRole('button', { name: 'Projeto anterior', exact: true }).click()
+    assert.match(await gallery.locator('img').getAttribute('src'), /bnOoqp2OafA/)
+    await page.getByRole('button', { name: 'Shorts', exact: true }).click()
+    assert.match(await gallery.locator('img').getAttribute('src'), /oF7MRtebWHs/)
+    assert.equal(await page.getByRole('button', { name: 'Shorts', exact: true }).getAttribute('aria-pressed'), 'true')
     await page.getByRole('button', { name: 'Todos', exact: true }).click()
     assert.equal(await page.locator('.feedback-card').count(), 15)
     const feedbackImages = await page.locator('.feedback-preview img').evaluateAll(async images => {
@@ -72,45 +100,9 @@ try {
     await page.evaluate(() => window.scrollTo(0, 0))
     await page.screenshot({ path: fileURLToPath(new URL(`viewport-${width}.png`, output)), fullPage: true })
     assert.deepEqual(errors, [])
-    results.push({ width, ...dimensions, errors, order, controls: 'passed', feedbackImages, feedbackModalAndNavigation: 'passed' })
+    results.push({ width, ...dimensions, errors, order, controls: 'passed', feedbackImages, feedbackModalAndNavigation: 'passed', youtubeIntegration: 'passed', youtubeIds, presentationId: '9FwdP60SSpc', youtubeNetwork: 'External HTTPS blocked deliberately; playback not checked by this offline audit.' })
     await page.close()
   }
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } })
-  await page.route('https://**/*', route => route.abort())
-  await page.goto('http://127.0.0.1:5173/')
-  const media = await page.evaluate(async () => {
-    const canvas = document.createElement('canvas')
-    canvas.width = 320
-    canvas.height = 180
-    const context = canvas.getContext('2d')
-    context.fillStyle = '#722c32'
-    context.fillRect(0, 0, 320, 180)
-    const stream = canvas.captureStream(10)
-    const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp8' })
-    const chunks = []
-    recorder.ondataavailable = event => chunks.push(event.data)
-    const complete = new Promise(resolve => { recorder.onstop = async () => resolve([...new Uint8Array(await new Blob(chunks).arrayBuffer())]) })
-    const started = new Promise(resolve => { recorder.onstart = resolve })
-    recorder.start(100)
-    await started
-    for (let frame = 0; frame < 20; frame++) {
-      context.fillStyle = frame % 2 ? '#e8d7b3' : '#722c32'
-      context.fillRect(0, 0, 320, 180)
-      stream.getVideoTracks()[0].requestFrame()
-      await new Promise(resolve => setTimeout(resolve, 100))
-    }
-    recorder.stop()
-    const bytes = await complete
-    stream.getTracks().forEach(track => track.stop())
-    return bytes
-  })
-  assert.ok(media.length > 100, 'Synthetic video must contain recorded frames')
-  await page.locator('.hero-video input[type=file]').setInputFiles({ name: 'qa-synthetic.webm', mimeType: 'video/webm', buffer: Buffer.from(media) })
-  await page.waitForFunction(() => document.querySelector('#demoreel-player').src.startsWith('blob:'))
-  const video = page.locator('#demoreel-player')
-  await video.evaluate(async element => { element.load(); await element.play(); element.pause() })
-  assert.equal(await page.locator('.hero-video .video-placeholder').count(), 0)
-  results.push({ videoUploadAndPlayback: 'passed', media: 'Synthetic QA-only canvas recording, not a portfolio asset.' })
   await writeFile(new URL('results.json', output), JSON.stringify(results, null, 2))
   console.log(JSON.stringify(results, null, 2))
 } finally {

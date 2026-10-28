@@ -6,3 +6,17 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .skill-card p{font-size:13px}
 @media(min-width:600px){.skill-card p{font-size:15px}}
+
+.youtube-player{position:relative;aspect-ratio:16/9;min-height:200px;background:var(--night);overflow:hidden}
+.youtube-player iframe,.youtube-launch{position:absolute;inset:0;display:block;width:100%;height:100%;border:0}
+.youtube-launch{padding:0;background:var(--night);color:var(--parchment)}
+.youtube-launch img{width:100%;height:100%;object-fit:cover}
+.youtube-play-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#120c0926;font-family:var(--heading);font-size:12px;text-shadow:0 1px 4px #000}
+.youtube-play-label .play-mark{background:#120c09d9}
+.youtube-launch:hover .play-mark{background:var(--burgundy)}
+.youtube-launch:focus-visible{outline:3px solid var(--gold);outline-offset:-5px}
+.portrait-video .video-frame{max-width:360px;margin-inline:auto}
+.portrait-video .youtube-player{aspect-ratio:9/16}
+.video-caption h3{overflow-wrap:anywhere}
+.gallery-controls{gap:16px}
+.gallery-dots button{width:26px}

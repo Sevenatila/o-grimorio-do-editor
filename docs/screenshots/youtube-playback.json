@@ -1,0 +1,58 @@
+[
+  {
+    "section": ".hero-video",
+    "iframe": "https://www.youtube-nocookie.com/embed/9FwdP60SSpc?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.216128,
+    "paused": false,
+    "readyState": 4
+  },
+  {
+    "section": ".portfolio-stage",
+    "iframe": "https://www.youtube-nocookie.com/embed/oF7MRtebWHs?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.206816,
+    "paused": false,
+    "readyState": 4
+  },
+  {
+    "section": ".portfolio-stage",
+    "iframe": "https://www.youtube-nocookie.com/embed/9FwdP60SSpc?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.176811,
+    "paused": false,
+    "readyState": 4
+  },
+  {
+    "section": ".portfolio-stage",
+    "iframe": "https://www.youtube-nocookie.com/embed/QstQJOrkq2k?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.124065,
+    "paused": false,
+    "readyState": 4
+  },
+  {
+    "section": ".portfolio-stage",
+    "iframe": "https://www.youtube-nocookie.com/embed/rwz_finz-Y0?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.042255,
+    "paused": false,
+    "readyState": 4
+  },
+  {
+    "section": ".portfolio-stage",
+    "iframe": "https://www.youtube-nocookie.com/embed/fCXZFommLOA?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.193981,
+    "paused": false,
+    "readyState": 4
+  },
+  {
+    "section": ".portfolio-stage",
+    "iframe": "https://www.youtube-nocookie.com/embed/bnOoqp2OafA?autoplay=1&playsinline=1&rel=0&hl=pt-BR",
+    "playback": "passed",
+    "currentTime": 0.035343,
+    "paused": false,
+    "readyState": 4
+  }
+]

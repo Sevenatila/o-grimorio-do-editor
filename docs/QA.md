@@ -1,5 +1,14 @@
 # Primeira auditoria — 28/10/2026
 
+## Atualização: seis vídeos do YouTube — 28/10/2026
+
+- Os seis links enviados substituem os slots demonstrativos. O destaque inicial usa `9FwdP60SSpc`, por escolha do usuário; o acervo conserva os seis vídeos na ordem recebida. Títulos e miniaturas confirmados no oEmbed oficial do YouTube.
+- `npm run build`: aprovado. `npm run qa`: aprovado em 390, 768 e 1440px, sem overflow horizontal nem erros JavaScript. O teste cobre os seis destinos, CTA do destaque, foco do iframe, miniaturas locais, navegação circular, filtro Shorts, proporção 9:16 do acervo e interrupção do player anterior.
+- Teste adicional com acesso real ao YouTube: reprodução iniciada com sucesso no destaque e em cada um dos seis itens do acervo, confirmando avanço de `currentTime`, `paused: false` e `readyState: 4`. Evidência em `docs/screenshots/youtube-playback.json`. Esse teste confirma início da reprodução, não visualização integral dos vídeos.
+- As três capturas completas foram abertas e comparadas com a referência. A moldura do destaque permanece horizontal; o player do acervo é vertical e centralizado. Capitulares, sete habilidades e ordem dos feedbacks permanecem corretos.
+- O QA responsivo continua bloqueando HTTPS externo e usando fontes em fallback deliberadamente. A reprodução real foi verificada separadamente. Reprodução futura e legendas dependem da disponibilidade e permissões dos vídeos no YouTube; cada item possui link para abrir o original.
+- As seções abaixo registram versões anteriores. Pendências antigas de vídeos demonstrativos e testes de upload sintético não descrevem os atuais players do YouTube. O player HTML5 continua disponível para fontes diretas, mas o teste de upload sintético anterior não foi reexecutado nesta revisão.
+
 ## Revalidação para envio ao GitHub — 28/10/2026
 
 - `npm run build`: aprovado (TypeScript e build de produção Vite).
