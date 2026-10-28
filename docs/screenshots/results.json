@@ -1,0 +1,93 @@
+[
+  {
+    "width": 390,
+    "viewport": 390,
+    "content": 390,
+    "headings": [
+      "De onde vim e onde cheguei: A Jornada",
+      "Acervo de contos Portfólio",
+      "O meu arsenal O Grimório",
+      "Feedbacks Dos Clientes",
+      "Vamos contar A Sua História?"
+    ],
+    "skills": 7,
+    "fontSource": "fallback",
+    "loadedFontFaces": [],
+    "heroVideo": 122,
+    "heroText": 348.25,
+    "errors": [],
+    "order": [
+      "hero",
+      "jornada",
+      "acervo",
+      "grimorio",
+      "feedbacks",
+      "epilogo"
+    ],
+    "controls": "passed",
+    "feedbackImages": 15,
+    "feedbackModalAndNavigation": "passed"
+  },
+  {
+    "width": 768,
+    "viewport": 768,
+    "content": 768,
+    "headings": [
+      "De onde vim e onde cheguei: A Jornada",
+      "Acervo de contos Portfólio",
+      "O meu arsenal O Grimório",
+      "Feedbacks Dos Clientes",
+      "Vamos contar A Sua História?"
+    ],
+    "skills": 7,
+    "fontSource": "fallback",
+    "loadedFontFaces": [],
+    "heroVideo": 148.78125,
+    "heroText": 571.453125,
+    "errors": [],
+    "order": [
+      "hero",
+      "jornada",
+      "acervo",
+      "grimorio",
+      "feedbacks",
+      "epilogo"
+    ],
+    "controls": "passed",
+    "feedbackImages": 15,
+    "feedbackModalAndNavigation": "passed"
+  },
+  {
+    "width": 1440,
+    "viewport": 1440,
+    "content": 1440,
+    "headings": [
+      "De onde vim e onde cheguei: A Jornada",
+      "Acervo de contos Portfólio",
+      "O meu arsenal O Grimório",
+      "Feedbacks Dos Clientes",
+      "Vamos contar A Sua História?"
+    ],
+    "skills": 7,
+    "fontSource": "fallback",
+    "loadedFontFaces": [],
+    "heroVideo": 233.015625,
+    "heroText": 198,
+    "errors": [],
+    "order": [
+      "hero",
+      "jornada",
+      "acervo",
+      "grimorio",
+      "feedbacks",
+      "epilogo"
+    ],
+    "controls": "passed",
+    "feedbackImages": 15,
+    "feedbackModalAndNavigation": "passed"
+  },
+  {
+    "videoUploadAndPlayback": "passed",
+    "media": "Synthetic QA-only canvas recording, not a portfolio asset."
+  }
+]

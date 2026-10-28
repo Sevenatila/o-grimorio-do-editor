@@ -1,0 +1,84 @@
+.feedback-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 24px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: var(--gold) transparent;
+  scrollbar-width: thin;
+  padding: 8px 5px 20px;
+  margin: 0 -5px;
+}
+
+.feedback-track:focus-visible {
+  outline: 2px solid var(--burgundy);
+  outline-offset: 4px;
+}
+
+.feedback-card {
+  position: relative;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--gold);
+  background: #f3e5c7;
+  scroll-snap-align: start;
+}
+
+.feedback-card .corner { width: 30px; height: 30px; }
+
+.feedback-preview {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #1b1712;
+  text-align: center;
+}
+
+.feedback-preview img {
+  height: 380px;
+  object-fit: contain;
+}
+
+.feedback-preview > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 13px 8px;
+  color: var(--ink);
+  background: #f3e5c7;
+  font-family: var(--heading);
+  font-size: 11px;
+}
+
+.feedback-preview:hover > span { color: var(--burgundy); text-decoration: underline; }
+.feedback-controls { margin-bottom: 0; }
+.feedback-count { min-width: 80px; text-align: center; font-size: 14px; }
+
+.feedback-dialog {
+  width: min(860px, calc(100% - 28px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 1px solid var(--gold);
+  background: var(--night);
+  color: var(--parchment);
+  overscroll-behavior: contain;
+}
+
+.feedback-dialog::backdrop { background: #120c09e8; }
+.feedback-dialog-header { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 18px; background: var(--night); border-bottom: 1px solid var(--gold); }
+.feedback-dialog-header h3 { font: 15px var(--heading); }
+.feedback-dialog img { height: auto; }
+body:has(.feedback-dialog[open]) { overflow: hidden; }
+
+@media (min-width: 600px) {
+  .feedback-track { grid-auto-columns: calc((100% - 24px) / 2); }
+  .feedback-preview img { height: 420px; }
+}
+
+@media (min-width: 1050px) {
+  .feedback-track { grid-auto-columns: calc((100% - 48px) / 3); }
+}

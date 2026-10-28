@@ -1,0 +1,63 @@
+Estética Geral [ O Grimório do Editor ] 
+ 
+ 
+● 
+Fundo (Background): Textura de papel pergaminho amarelado e manchado pelo tempo. 
+● 
+Tipografia:  
+* Títulos: Uma fonte Serifada clássica e rebuscada (ex: Cinzel ou UnifrakturMaguntia) 
+* Textos: Uma fonte Serifada mais limpa para garantir a leitura em telas (ex: Lora) 
+* Letras Capitulares (Drop Caps): A primeira letra de cada seção deve ser enorme, com estilo iluminura medieval (letras desenhadas com folhas de ouro, vinhas ou detalhes celtas). 
+● 
+Cores: Tons de sépia, marrom escuro (para o texto, imitando tinta nanquim), dourado envelhecido e um vermelho bordô para destacar palavras importantes. 
+● 
+Palavras-chave: Iluminura medieval, livro antigo, pergaminho. 
+ 
+ 
+Estrutura da Landing Page  
+ 
+1. Capítulo I: A Jornada (Quem sou eu) 
+O layout aqui pode ser dividido em duas colunas. De um lado, o texto. Do outro, um vídeo de apresentação (Demoreel) mas emolduradas como um retrato antigo ou um esboço a lápis.  
+● 
+Título da Seção: De onde vim e onde cheguei: A Jornada. 
+● 
+Corpo do Texto (Com a letra "T" capitular medieval): Toda grande história tem um começo. A minha começou lá em 2024, editando vídeos para a loja de açaí de um amigo. O que era para ser apenas uma ajuda rápida me fez descobrir o verdadeiro poder do audiovisual: eu vi, na prática, como um vídeo bem feito era capaz de trazer clientes reais para o balcão.  
+● 
+Continuação: Essa faísca virou minha profissão. De 2024 para cá, refinei meu olhar, aprofundei minhas técnicas e escalei meus projetos. Hoje, troquei as tigelas de açaí por campanhas para empresas e corporações, ajudando marcas a se posicionarem com autoridade no mercado digital. O cenário mudou, as ferramentas evoluíram, mas a essência continua a mesma: a paixão por contar uma história que prende e emociona.   
+(Se o texto ficar muito grande utilizar somente a primeira parte) 
+ 
+ 2. Capítulo II: O Acervo de Contos (Portfólio) 
+Aqui é onde entram seus projetos de edição.  
+● 
+Vídeos: Player emoldurado com adornos da iluminura medieval, assim como o botão de play e as setas de passar para o próximo vídeo e vídeo anterior. 
+ 
+3. Capítulo IIl: O Grimório (O Meu Arsenal) 
+Nesta seção, suas habilidades são apresentadas como magias ou ferramentas de um artesão. É um ótimo lugar para incluir ícones estilizados das ferramentas que você domina e das suas habilidades, desenhado como símbolo alquímicos. 
+● 
+Introdução: O meu Arsenal: Como eu construo o seu vídeo. Não acredito em vídeos engessados. Acredito em estratégia aliada à estética. Para garantir um resultado cinematográfico e de alta retenção, domino todas as etapas da produção audiovisual: 
+● 
+Formato de Grade (Grid com pequenos pergaminhos que abrem ou em formato de esferas para cada habilidade): 
+○ 
+Roteirização e Storytelling: Antes do REC, existe a ideia. Crio roteiros estruturados para prender a atenção nos primeiros segundos e conduzir o espectador até a conversão. 
+○ 
+Captação de Imagem: Um olhar direcionado para extrair os melhores ângulos, luzes e movimentos que a sua marca precisa. 
+○ 
+Montagem: Agilidade e precisão. Utilizo o CapCut Pro em seu potencial máximo para criar montagens dinâmicas, com efeitos de alta retenção e cortes no ritmo exato da atenção humana. 
+○ 
+Color Grading: Correção e colorização estratégica para criar a atmosfera perfeita e transmitir o "mood" exato da sua marca. 
+○ 
+Tratamento de Áudio: Um áudio ruim destrói um bom vídeo. Garanto vozes nítidas, sound design imersivo e trilhas sonoras que ditam o ritmo da emoção. 
+○ 
+Trend Hunting: Estou sempre mapeando o mercado. Trago para a sua marca o que está em alta, adaptando tendências virais para o seu nicho com originalidade. 
+○ 
+Gestão de Projetos: Criatividade não é desculpa para desorganização. Trabalho com cronogramas claros, processos definidos e entregas rigorosamente no prazo. 
+ 
+4. Epílogo: A Sua História (Contato) 
+O final da página, simulando a contracapa do livro ou as últimas linhas antes de uma página em branco. 
+● 
+Texto Final (Letra "V" capitular): Vamos contar a história da sua marca? Se você procura um editor que apenas aperta botões, talvez eu não seja a pessoa certa. Mas se você busca um parceiro estratégico que entende de retenção, emoção e conversão, nós precisamos conversar. 
+ ● 
+Botão Final (CTA): "Escreva o Seu Próximo Capítulo" (Link direto para o seu WhatsApp ou formulário). 
+ 
+ 
+ 

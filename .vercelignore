@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.git/
+.tools/
+.claude/
+.codex/
+.agents/
+.env
+.env.*
+!.env.example
+references/
+docs/
+skills/
+scripts/
