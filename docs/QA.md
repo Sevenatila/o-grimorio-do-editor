@@ -1,5 +1,11 @@
 # Primeira auditoria — 28/10/2026
 
+## Revalidação para envio ao GitHub — 28/10/2026
+
+- `npm run build`: aprovado (TypeScript e build de produção Vite).
+- `npm run qa`: aprovado em 390, 768 e 1440px, incluindo navegação, feedbacks, ausência de overflow e upload/reprodução de vídeo sintético exclusivo do teste.
+- Capturas atualizadas em `docs/screenshots/`. As limitações de fontes em fallback e de conteúdo/mídia final descritas abaixo continuam aplicáveis; o QA bloqueia HTTPS externo deliberadamente.
+
 ## Revisão posterior: feedbacks e fontes
 
 Os 15 prints locais substituem o card pendente. O teste foi ampliado para decodificar todas as imagens, navegar no carrossel, abrir a última captura, fechar por Escape e por botão e verificar a restauração de foco. A fonte efetiva continua em fallback por ausência de Cinzel/Lora locais e bloqueio externo; agora o carregador prioriza arquivos locais e expõe o diagnóstico real. Detalhes em `docs/FEEDBACKS_AND_FONTS.md`. As observações abaixo descrevem a primeira versão; screenshots e results.json são atualizados pela revisão mais recente.
