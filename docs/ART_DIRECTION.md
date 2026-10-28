@@ -20,7 +20,7 @@ O mockup orienta hero escuro, papel ocre, capitulares bordô e molduras douradas
 | Espaço lateral | clamp(24px, 5vw, 72px) |
 | Espaço entre seções | 34px mobile, 50px tablet/desktop |
 | Corpo | 16px; descrições compactas em grid: 13px mobile |
-| Vídeo | 16:9, borda fina com cantos SVG sobrepostos |
+| Vídeo | Shorts em 9:16, moldura escura e ouro fosco com cantos SVG |
 
 Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes instaladas e por último do Google Fonts com `display=swap`. Sem arquivos nem rede, Georgia garante leitura. A validação confirmou que as famílias desejadas não estão disponíveis nesta máquina; a tipografia definitiva requer seus arquivos WOFF2/TTF. Nenhum título está embutido em imagem; os prints de feedback preservam as conversas originais fornecidas pelo usuário.
 
@@ -34,11 +34,15 @@ Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes
 
 ## Mídia e conteúdo
 
-SVGs locais são ilustrações provisórias, não imagens finais do cliente. Os 15 prints recebidos em `public/assets/testimonials/` são exibidos no carrossel de feedbacks, com ampliação dos originais. Não se deduzem nomes, empresas ou notas a partir de contexto ambíguo. A inclusão dos prints foi solicitada explicitamente pelo usuário.
+As três cenas e a textura de pergaminho foram geradas com `image_gen` a pedido do usuário, seguindo a referência visual original. São ilustrações decorativas: não representam um retrato de Marcos, clientes ou resultados. Os PNGs gerados estão preservados em `artwork/generated/`, com prompts finais em `artwork/GENERATION.md`. O site usa arquivos WebP em `public/assets/art/`, incluindo variantes menores para a Jornada e o Epílogo no celular. Os antigos SVGs e as referências permanecem preservados.
+
+Os 15 prints recebidos em `public/assets/testimonials/` são exibidos no carrossel de feedbacks, com ampliação dos originais. Não se deduzem nomes, empresas ou notas a partir de contexto ambíguo. A inclusão dos prints foi solicitada explicitamente pelo usuário.
 
 O acervo agora contém os seis Shorts enviados pelo usuário, na ordem recebida. O vídeo `9FwdP60SSpc` é o destaque inicial por escolha explícita. Títulos e miniaturas foram consultados no oEmbed oficial do YouTube em 28/10/2026; miniaturas preservadas em `public/assets/videos/`. Categoria factual: Shorts. Não foram criados clientes, resultados nem descrições adicionais a partir dos títulos.
 
-O destaque mantém a moldura horizontal; o acervo usa moldura vertical 9:16, centralizada e com largura máxima de 360px. O iframe do YouTube só é montado após clique, com controles e tela cheia. Abrir outro player desmonta o iframe anterior para interromper a reprodução. Cada vídeo tem link direto para o YouTube. Integração conforme a [documentação oficial de players incorporados](https://developers.google.com/youtube/player_parameters).
+O destaque e o acervo respeitam a proporção vertical 9:16. A capa principal usa a nova ilustração do editor em um scriptorium; o vídeo continua sendo `9FwdP60SSpc`. As capas do acervo são miniaturas oficiais em alta resolução, preservando os arquivos anteriores. Molduras, botão circular de play e acabamento em bordô e ouro são CSS/SVG; no desktop, a descrição do acervo ocupa uma segunda coluna em um painel escuro. Microanimações respeitam reduced-motion.
+
+O iframe do YouTube só é montado após clique, com controles e tela cheia. Abrir outro player desmonta o iframe anterior para interromper a reprodução. A ação “Voltar à capa” interrompe o vídeo e devolve o foco ao botão de play. Cada item tem link direto para o YouTube, em dourado sobre o fundo escuro. Os controles internos permanecem os do YouTube, sem ocultar ou sobrepor suas ações. Integração conforme a [documentação oficial de players incorporados](https://developers.google.com/youtube/player_parameters).
 
 Players HTML5 continuam disponíveis para fontes MP4/WebM, com poster, controles nativos, preload none, carregamento de arquivo local sem upload e erro legível. Configurar mídias em `src/data/content.ts`. Adicionar legendas WebVTT pelo campo `captions` quando usar arquivos diretos; no YouTube, as legendas dependem do vídeo original.
 

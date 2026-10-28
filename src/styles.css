@@ -7,16 +7,13 @@
 .skill-card p{font-size:13px}
 @media(min-width:600px){.skill-card p{font-size:15px}}
 
-.youtube-player{position:relative;aspect-ratio:16/9;min-height:200px;background:var(--night);overflow:hidden}
-.youtube-player iframe,.youtube-launch{position:absolute;inset:0;display:block;width:100%;height:100%;border:0}
-.youtube-launch{padding:0;background:var(--night);color:var(--parchment)}
-.youtube-launch img{width:100%;height:100%;object-fit:cover}
-.youtube-play-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#120c0926;font-family:var(--heading);font-size:12px;text-shadow:0 1px 4px #000}
-.youtube-play-label .play-mark{background:#120c09d9}
-.youtube-launch:hover .play-mark{background:var(--burgundy)}
-.youtube-launch:focus-visible{outline:3px solid var(--gold);outline-offset:-5px}
-.portrait-video .video-frame{max-width:360px;margin-inline:auto}
-.portrait-video .youtube-player{aspect-ratio:9/16}
 .video-caption h3{overflow-wrap:anywhere}
 .gallery-controls{gap:16px}
 .gallery-dots button{width:26px}
+
+.section{background-image:linear-gradient(#e8d7b34d,#e8d7b34d),url('/assets/art/parchment.webp');background-size:auto,768px;background-blend-mode:normal,multiply}
+.journey-art img{height:auto;opacity:1;mask-image:linear-gradient(180deg,transparent,#000 8%,#000 92%,transparent)}
+.epilogue-art img{height:auto}
+.epilogue-art::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 45%,#120c0999)}
+.epilogue-art figcaption{z-index:1;top:auto;bottom:20px;transform:none;max-width:42%;font-size:clamp(13px,1.6vw,20px);text-shadow:0 2px 8px #000}
+@media(min-width:1050px){.journey-art{align-self:end}.journey-art img{height:auto;min-height:0;aspect-ratio:5/3;object-fit:contain}.epilogue-art img{height:100%;object-position:32% center}.epilogue-art figcaption{bottom:30px;max-width:65%;right:8%}}

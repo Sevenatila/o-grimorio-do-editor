@@ -25,9 +25,33 @@ export const projects: Project[] = selectedVideos.map(({ id, title }) => ({
   title,
   category: 'Shorts',
   description: '',
-  poster: `/assets/videos/${id}.jpg`,
+  poster: `/assets/videos/${id}-hd.jpg`,
   format: 'portrait',
 }))
+
+export const mediaLabels = {
+  presentation: 'Em destaque',
+  collection: 'Do acervo do editor',
+  format: 'Vídeo vertical',
+  play: 'Assistir ao vídeo',
+  playHint: 'Uma história em movimento',
+  source: 'Abrir no YouTube',
+  backToCover: 'Voltar à capa',
+}
+
+export const artwork = {
+  heroCover: '/assets/art/hero-editor.webp',
+  journey: {
+    src: '/assets/art/journey-city.webp',
+    srcSet: '/assets/art/journey-city-mobile.webp 800w, /assets/art/journey-city.webp 1600w',
+    alt: 'Gravura em sépia de um artesão anônimo contemplando uma cidade medieval, suas torres e pontes.',
+  },
+  epilogue: {
+    src: '/assets/art/epilogue-desk.webp',
+    srcSet: '/assets/art/epilogue-desk-mobile.webp 800w, /assets/art/epilogue-desk.webp 1600w',
+    alt: 'Ilustração de livros antigos, pergaminho em branco, pena e vela acesa sobre uma mesa de madeira.',
+  },
+}
 
 export const site = {
   name: 'O Grimório do Editor',
@@ -38,7 +62,7 @@ export const site = {
   hero: {
     title: 'Estratégia, estética e emoção em cada quadro.',
     description: 'Edição de vídeos que transformam ideias em histórias que prendem, conectam e geram resultados.',
-    video: { ...projects[1], id: 'demoreel', category: 'Apresentação', src: import.meta.env.VITE_DEMOREEL_URL || '' } as Project,
+    video: { ...projects[1], id: 'demoreel', category: 'Apresentação', poster: artwork.heroCover, src: import.meta.env.VITE_DEMOREEL_URL || '' } as Project,
   },
   journey: [
     'Toda grande história tem um começo. A minha começou lá em 2024, editando vídeos para a loja de açaí de um amigo. O que era para ser apenas uma ajuda rápida me fez descobrir o verdadeiro poder do audiovisual: eu vi, na prática, como um vídeo bem feito era capaz de trazer clientes reais para o balcão.',

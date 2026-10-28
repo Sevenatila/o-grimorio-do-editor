@@ -16,6 +16,8 @@ Configure `.env` a partir de `.env.example`: `VITE_WHATSAPP_NUMBER` com DDI/DDD 
 
 Fontes Google e GSAP/ScrollTrigger via CDN exigem conexão; sem ela, a página mantém fontes serifadas de fallback e conteúdo estático. GSAP deve passar para import local depois de instalado em um ambiente com acesso ao npm. As dependências do build desta execução foram recuperadas de instalações locais, pois a rede foi bloqueada; não foi possível gerar lockfile pelo registro.
 
-QA: execute o servidor e `npm run qa`. O script utiliza Playwright e Edge nesta máquina; em outra, defina `PLAYWRIGHT_CHROMIUM_EXECUTABLE` apontando para seu Chromium. Screenshots e evidências ficam em `docs/screenshots/`.
+Artes geradas: originais em `artwork/generated/`, arquivos usados no site em `public/assets/art/` e prompts finais em `artwork/GENERATION.md`. Caminhos e textos alternativos das cenas estão em `src/data/content.ts`. A nova capa ilustrada do destaque mantém o vídeo principal selecionado; as capas do acervo são as miniaturas oficiais em alta resolução.
+
+QA: execute o servidor e `npm run qa`. O script utiliza Playwright e Edge nesta máquina; em outra, defina `PLAYWRIGHT_CHROMIUM_EXECUTABLE` apontando para seu Chromium. Screenshots e evidências atuais ficam em `docs/screenshots/visual-refresh/`; as capturas anteriores permanecem em `docs/screenshots/`.
 
 Veja `docs/ART_DIRECTION.md`, `docs/IMAGE_PROMPTS.md` e `docs/QA.md`. As skills específicas deste projeto estão em `skills/`; não foram instaladas globalmente.

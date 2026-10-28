@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { navigation, projects, site, skills } from './data/content'
+import { artwork, navigation, projects, site, skills } from './data/content'
 import { SectionHeading } from './components/SectionHeading'
 import { Flourish, SkillSymbol } from './components/Ornaments'
 import { VideoCard } from './components/VideoCard'
@@ -29,7 +29,7 @@ function Hero() {
 }
 
 function Journey() {
-  return <section id="jornada" className="section journey" aria-labelledby="journey-title"><div className="journey-copy reveal"><SectionHeading id="journey-title" initial="D" continuation="e onde vim e onde cheguei:" title="A Jornada"/>{site.journey.map((paragraph, index) => <p className={index === 0 ? 'journey-opening' : ''} key={paragraph}>{paragraph}</p>)}</div><figure className="journey-art"><img src="/assets/city-scene.svg" width="800" height="480" loading="lazy" alt="Ilustração provisória em tinta sépia: artesão contemplando uma cidade medieval."/><figcaption>O cenário muda. A essência permanece.</figcaption></figure></section>
+  return <section id="jornada" className="section journey" aria-labelledby="journey-title"><div className="journey-copy reveal"><SectionHeading id="journey-title" initial="D" continuation="e onde vim e onde cheguei:" title="A Jornada"/>{site.journey.map((paragraph, index) => <p className={index === 0 ? 'journey-opening' : ''} key={paragraph}>{paragraph}</p>)}</div><figure className="journey-art"><img src={artwork.journey.src} srcSet={artwork.journey.srcSet} sizes="(min-width: 1050px) 600px, 100vw" width="1600" height="960" loading="lazy" alt={artwork.journey.alt}/><figcaption>O cenário muda. A essência permanece.</figcaption></figure></section>
 }
 
 function PortfolioGallery() {
@@ -52,7 +52,7 @@ function Arsenal() {
 function ContactEpilogue() {
   const [notice, setNotice] = useState(false)
   const whatsapp = site.whatsapp.replace(/\D/g, '')
-  return <section id="epilogo" className="section epilogue" aria-labelledby="epilogue-title"><div className="epilogue-copy reveal"><SectionHeading id="epilogue-title" initial="V" continuation="amos contar" title="A Sua História?"/><p>{site.contact}</p>{whatsapp ? <a className="button button-primary" href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(site.message)}`} target="_blank" rel="noreferrer">Escreva o Seu Próximo Capítulo <span aria-hidden="true">↗</span></a> : <button className="button button-primary" aria-expanded={notice} aria-controls="contact-notice" onClick={() => setNotice(!notice)}>Escreva o Seu Próximo Capítulo <span aria-hidden="true">↗</span></button>}<p id="contact-notice" className="contact-notice" role="status">{notice ? 'O contato por WhatsApp será disponibilizado em breve.' : ''}</p></div><figure className="epilogue-art"><img src="/assets/epilogue-scene.svg" width="800" height="400" loading="lazy" alt="Ilustração provisória de livros, pena, pergaminho e vela sobre uma mesa."/><figcaption>Todo grande projeto começa<br/>com uma boa conversa.</figcaption></figure></section>
+  return <section id="epilogo" className="section epilogue" aria-labelledby="epilogue-title"><div className="epilogue-copy reveal"><SectionHeading id="epilogue-title" initial="V" continuation="amos contar" title="A Sua História?"/><p>{site.contact}</p>{whatsapp ? <a className="button button-primary" href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(site.message)}`} target="_blank" rel="noreferrer">Escreva o Seu Próximo Capítulo <span aria-hidden="true">↗</span></a> : <button className="button button-primary" aria-expanded={notice} aria-controls="contact-notice" onClick={() => setNotice(!notice)}>Escreva o Seu Próximo Capítulo <span aria-hidden="true">↗</span></button>}<p id="contact-notice" className="contact-notice" role="status">{notice ? 'O contato por WhatsApp será disponibilizado em breve.' : ''}</p></div><figure className="epilogue-art"><img src={artwork.epilogue.src} srcSet={artwork.epilogue.srcSet} sizes="(min-width: 1050px) 600px, 100vw" width="1600" height="800" loading="lazy" alt={artwork.epilogue.alt}/><figcaption>Todo grande projeto começa<br/>com uma boa conversa.</figcaption></figure></section>
 }
 
 function Footer() {

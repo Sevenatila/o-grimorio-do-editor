@@ -1,5 +1,15 @@
 # Primeira auditoria — 28/10/2026
 
+## Renovação visual: players e quatro artes geradas — 28/10/2026
+
+- Quatro imagens criadas com a ferramenta integrada `image_gen`: capa do editor no scriptorium, gravura da cidade para a Jornada, mesa com livros e vela para o Epílogo e textura de pergaminho. Originais PNG em `artwork/generated/`; prompts finais e proveniência em `artwork/GENERATION.md`; WebP e variantes menores para celular em `public/assets/art/`. Referências e SVGs anteriores preservados.
+- Os Shorts agora usam 9:16 também no destaque principal, mantendo `9FwdP60SSpc`. Botão SVG de play em bordô e dourado, moldura com contraste adequado, capa ilustrada no destaque e miniaturas oficiais de maior resolução no acervo. No tablet e desktop, o acervo apresenta vídeo e título em duas colunas dentro de um painel escuro.
+- `npm run build`: aprovado. `npm run qa`: aprovado em 390, 768 e 1440px. Sem overflow horizontal nem exceções JavaScript; sete habilidades, capitulares e ordem das seções preservadas. Conferidos seis destinos do YouTube, CTA do destaque, teclado, foco, navegação do acervo, feedbacks e contato.
+- A ação “Voltar à capa” desmonta o iframe e restaura o foco ao play; ao iniciar outro vídeo, o player anterior é interrompido. A animação suave das capas não é aplicada com reduced-motion.
+- As capturas finais das três larguras foram abertas e comparadas com a referência. As novas cenas respeitam proporções 5:3 e 2:1 no celular; a altura responsiva foi corrigida para impedir recortes acidentais. Textos e botões permanecem em HTML/React. A textura tem contraste baixo para manter a leitura.
+- Evidências atuais em `docs/screenshots/visual-refresh/`, incluindo página completa, recortes do destaque/acervo e `results.json`. As capturas da revisão anterior permanecem separadas. Uma tentativa de sobrescrever uma captura anterior falhou na abertura do arquivo no Windows; a execução final em diretório separado foi concluída.
+- Limites: o QA responsivo bloqueia HTTPS externo deliberadamente e usa fontes em fallback. Os controles internos, anúncios e opções do YouTube permanecem sob responsabilidade do serviço; o acabamento do site é aplicado à capa, moldura, layout e ações externas. As artes são decorativas e não representam retrato real de Marcos nem novos trabalhos de clientes.
+
 ## Atualização: seis vídeos do YouTube — 28/10/2026
 
 - Os seis links enviados substituem os slots demonstrativos. O destaque inicial usa `9FwdP60SSpc`, por escolha do usuário; o acervo conserva os seis vídeos na ordem recebida. Títulos e miniaturas confirmados no oEmbed oficial do YouTube.

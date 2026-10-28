@@ -1,6 +1,8 @@
 # Assets definitivos — prompts
 
-Os SVGs atuais são substitutos provisórios. Os textos finais pertencem ao HTML, nunca às imagens. Todos os prompts usam a mesma direção de arte abaixo, repetida integralmente para permitir geração independente. Nenhuma imagem foi gerada por IA nesta execução.
+Quatro assets foram gerados com a ferramenta integrada `image_gen` em 28/10/2026, a pedido do usuário: editor no scriptorium, cidade medieval, mesa do Epílogo e textura de pergaminho. Os prompts efetivamente usados e os caminhos de cada arquivo estão em [artwork/GENERATION.md](../artwork/GENERATION.md). Originais PNG preservados em `artwork/generated/`; exportações WebP otimizadas em `public/assets/art/`. As ilustrações foram integradas ao site e os SVGs anteriores permanecem preservados.
+
+Os textos finais pertencem ao HTML, nunca às imagens. As propostas abaixo documentam o planejamento anterior; as quatro artes entregues seguem os prompts finais do arquivo de geração. Capitulares, ícones e molduras continuam em SVG/CSS para manter nitidez e acessibilidade.
 
 ## 1. Pergaminho
 
@@ -52,7 +54,7 @@ Os SVGs atuais são substitutos provisórios. Os textos finais pertencem ao HTML
 
 ## Outros materiais pendentes
 
-- Demoreel, vídeos selecionados do portfólio, posters e legendas VTT.
-- Identificação, empresa, avatar e seleção dos depoimentos fornecidos, com confirmação para publicação.
+- Os seis vídeos e as capas já foram selecionados e publicados. Para arquivos de vídeo diretos adicionados no futuro, fornecer legendas VTT; as legendas atuais dependem dos vídeos no YouTube.
+- Identificação e contexto de depoimentos que ainda não tenham atribuição confirmada. Os prints atuais foram publicados a pedido do usuário.
 - Número de WhatsApp no formato internacional.
 - Cinzel e Lora em WOFF2 para hospedagem local e uso sem conexão externa.

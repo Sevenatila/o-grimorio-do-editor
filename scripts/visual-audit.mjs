@@ -3,7 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import assert from 'node:assert/strict'
 
-const output = new URL('../docs/screenshots/', import.meta.url)
+const output = new URL('../docs/screenshots/visual-refresh/', import.meta.url)
 await mkdir(output, { recursive: true })
 console.log('Launching Chromium')
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: true, timeout: 20000 })
@@ -26,6 +26,10 @@ try {
     assert.deepEqual(dimensions.headings, ['De onde vim e onde cheguei: A Jornada', 'Acervo de contos Portfólio', 'O meu arsenal O Grimório', 'Feedbacks Dos Clientes', 'Vamos contar A Sua História?'])
     if (width < 1050) {
       assert.ok(dimensions.heroVideo < dimensions.heroText)
+      const journeyImage = await page.locator('.journey-art img').boundingBox()
+      const epilogueImage = await page.locator('.epilogue-art img').boundingBox()
+      assert.ok(Math.abs(journeyImage.width / journeyImage.height - 5 / 3) < .01, 'Journey illustration keeps its landscape ratio on mobile')
+      assert.ok(Math.abs(epilogueImage.width / epilogueImage.height - 2) < .01, 'Epilogue illustration keeps its landscape ratio on mobile')
       const menu = page.locator('.menu-toggle')
       await menu.click()
       await page.getByRole('button', { name: 'Fechar menu' }).waitFor()
@@ -43,13 +47,20 @@ try {
     assert.match(await heroFrame.getAttribute('src'), /\/embed\/9FwdP60SSpc\?/)
     assert.equal(await heroFrame.getAttribute('referrerpolicy'), 'strict-origin-when-cross-origin')
     assert.ok(await heroFrame.evaluate(element => element === document.activeElement))
+    const heroPlayerDimensions = await page.locator('.hero-video .youtube-player').boundingBox()
+    assert.ok(Math.abs(heroPlayerDimensions.width / heroPlayerDimensions.height - 9 / 16) < .01, 'Presentation keeps the vertical video ratio')
+    await page.locator('.hero-video').getByRole('button', { name: 'Voltar à capa' }).click()
+    assert.equal(await page.locator('.hero-video iframe').count(), 0)
+    await page.waitForFunction(() => document.activeElement?.matches('.hero-video .youtube-launch'))
+    await page.locator('.hero-video .youtube-launch').press('Enter')
+    await heroFrame.waitFor({ state: 'attached' })
     assert.equal(await page.locator('.gallery-dots button').count(), 6)
     const gallery = page.locator('.portfolio-stage')
     for (const id of youtubeIds) {
       const thumbnail = gallery.locator('.youtube-launch img')
       await thumbnail.scrollIntoViewIfNeeded()
       await thumbnail.evaluate(element => element.decode())
-      assert.match(await thumbnail.getAttribute('src'), new RegExp(`${id}\\.jpg$`))
+      assert.match(await thumbnail.getAttribute('src'), new RegExp(`${id}-hd\\.jpg$`))
       assert.equal(await gallery.getByRole('link', { name: 'Abrir no YouTube' }).getAttribute('href'), `https://www.youtube.com/shorts/${id}`)
       const playerDimensions = await gallery.locator('.youtube-player').boundingBox()
       assert.ok(Math.abs(playerDimensions.width / playerDimensions.height - 9 / 16) < .01, 'Portrait player keeps the 9:16 ratio')
@@ -98,7 +109,10 @@ try {
     const order = await page.locator('main > section').evaluateAll(elements => elements.map(element => element.id || 'hero'))
     assert.deepEqual(order, ['hero', 'jornada', 'acervo', 'grimorio', 'feedbacks', 'epilogo'])
     await page.evaluate(() => window.scrollTo(0, 0))
-    await page.screenshot({ path: fileURLToPath(new URL(`viewport-${width}.png`, output)), fullPage: true })
+    const screenshotStyle = '.skip-link:not(:focus){visibility:hidden}'
+    await page.screenshot({ path: fileURLToPath(new URL(`viewport-${width}.png`, output)), fullPage: true, style: screenshotStyle })
+    await page.locator('.hero').screenshot({ path: fileURLToPath(new URL(`players-hero-${width}.png`, output)), style: screenshotStyle })
+    await page.locator('#acervo').screenshot({ path: fileURLToPath(new URL(`players-acervo-${width}.png`, output)), style: screenshotStyle })
     assert.deepEqual(errors, [])
     results.push({ width, ...dimensions, errors, order, controls: 'passed', feedbackImages, feedbackModalAndNavigation: 'passed', youtubeIntegration: 'passed', youtubeIds, presentationId: '9FwdP60SSpc', youtubeNetwork: 'External HTTPS blocked deliberately; playback not checked by this offline audit.' })
     await page.close()
