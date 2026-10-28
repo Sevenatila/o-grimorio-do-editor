@@ -125,7 +125,7 @@ export function VideoCard({ project, hero = false }: { project: Project; hero?: 
   }
 
   return <div className={`video-card ${hero ? 'hero-video' : ''} ${isYouTube ? 'youtube-card' : ''} ${project.format === 'portrait' ? 'portrait-video' : ''} ${youtubeActive ? 'is-playing' : ''}`}>
-    {isYouTube && <div className="video-heading"><span>{hero ? mediaLabels.presentation : mediaLabels.collection}</span><span className="video-format">{mediaLabels.format}</span></div>}
+    {isYouTube && <div className="video-heading"><span>{hero ? mediaLabels.presentation : mediaLabels.collection}</span><span className="video-format">{project.format === 'portrait' ? mediaLabels.format : mediaLabels.landscapeFormat}</span></div>}
     <div id={hero ? 'demoreel-player' : undefined} className="video-frame" role="group" aria-label={project.title} tabIndex={-1}>
       {isYouTube ? <div className="youtube-player">
         <div ref={hostRef} className="youtube-host" aria-hidden={!youtubeActive}/>

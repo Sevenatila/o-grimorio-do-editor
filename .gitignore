@@ -9,3 +9,4 @@ dist/
 .codex/
 .agents/
 *.log
+public/uploads/

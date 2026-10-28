@@ -14,8 +14,27 @@
 .round-button .arrow-icon{width:22px;height:22px}
 .text-link .arrow-icon{width:15px;height:15px;margin-inline-start:4px}
 .feedback-preview .arrow-icon{width:14px;height:14px}
+.identity-name{max-width:170px;white-space:normal}
+.content-empty{padding:32px;border:1px solid var(--gold);text-align:center;font-style:italic}
+.gallery-dots{max-width:65%;flex-wrap:wrap;justify-content:center}
+body{font-family:var(--body-font,'Lora',Georgia,serif);color:var(--ink);background:radial-gradient(ellipse at top,#302016 0,var(--night) 60%)}
+.manuscript{background-color:var(--parchment)}
+.header,.footer{background-color:var(--night);color:var(--parchment)}
+.hero{background:radial-gradient(ellipse at 65% 50%,#3d2818,var(--night) 75%);color:var(--parchment)}
+.heading-title{color:var(--burgundy)}
+.button-primary,.portfolio-tabs .active,.illuminated-initial{background-color:var(--burgundy);border-color:var(--gold)}
+.button-primary{color:var(--parchment)}
+.button-primary:hover{background:var(--burgundy);filter:brightness(1.12)}
+.text-link,.arsenal-subtitle,.contact-notice,.video-caption h3{color:var(--burgundy)}
+.skill-card h3{color:var(--ink)}
+.epilogue-art figcaption{white-space:pre-line}
+h1{color:var(--display-gold,#e1c789)}
+.footer,.hero-bottom{color:var(--display-gold,var(--gold))}
+.youtube-card{--video-gold:var(--display-gold,#dfc38b)}
+.youtube-card .youtube-play-label .play-mark{background:var(--burgundy);color:var(--display-gold,#f3db9f);border-color:var(--gold)}
+.hero-copy>p:not(.eyebrow),.journey p,.section-intro>p,.epilogue-copy>p,.skill-card p,.video-caption p{white-space:pre-line}
 
-.section{background-image:linear-gradient(#e8d7b34d,#e8d7b34d),url('/assets/art/parchment.webp');background-size:auto,768px;background-blend-mode:normal,multiply}
+.section{background-image:linear-gradient(#e8d7b34d,#e8d7b34d),var(--paper-texture,url('/assets/art/parchment.webp'));background-size:auto,768px;background-blend-mode:normal,multiply}
 .journey-art img{height:auto;opacity:1;mask-image:linear-gradient(180deg,transparent,#000 8%,#000 92%,transparent)}
 .epilogue-art img{height:auto}
 .epilogue-art::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 45%,#120c0999)}

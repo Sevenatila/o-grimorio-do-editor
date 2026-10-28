@@ -53,6 +53,8 @@ WhatsApp depende de `VITE_WHATSAPP_NUMBER`. Sem número, o CTA apresenta aviso d
 
 ## Engenharia e movimento
 
+O painel em `/admin` usa a mesma paleta em uma interface de administração: menu escuro, formulários claros, ícones SVG e prévia do site em iframe. Os campos ficam em rascunho até clicar em Salvar alterações. Textos, imagens, cores, fontes, visibilidade, vídeos e feedbacks são obtidos do conteúdo publicado; os valores iniciais e referências continuam preservados no projeto. A API e a persistência são descritas em `docs/ADMIN.md`.
+
 React, Vite, TypeScript, componentes sem biblioteca de UI. Dados centralizados em `src/data/content.ts`. Build estático em `dist/`.
 
 GSAP 3.12.5 e ScrollTrigger são carregados sob demanda via CDN, com tratamento de falha e conteúdo inicialmente visível. A rede do executor bloqueou npm e não havia GSAP local; essa dependência está declarada, mas a cópia local ainda não foi instalada. Em ambiente conectado, instalar GSAP e preferir imports locais para remover dependência do CDN. Sem rede ou com reduced-motion, a página permanece estática e funcional. Os reveals só afetam blocos introdutórios, com 14px / 650ms e execução única.

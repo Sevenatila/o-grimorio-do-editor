@@ -9,6 +9,7 @@ console.log('Launching Chromium')
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: true, timeout: 20000 })
 console.log('Browser ready')
 const results = []
+const base = process.env.QA_BASE_URL || 'http://127.0.0.1:5173/'
 const youtubeIds = ['oF7MRtebWHs', '9FwdP60SSpc', 'QstQJOrkq2k', 'rwz_finz-Y0', 'fCXZFommLOA', 'bnOoqp2OafA']
 try {
   for (const width of [390, 768, 1440]) {
@@ -17,7 +18,7 @@ try {
     page.on('pageerror', error => errors.push(error.message))
     console.log(`Auditing ${width}px`)
     await page.route('https://**/*', route => route.abort())
-    await page.goto('http://127.0.0.1:5173/', { waitUntil: 'networkidle', timeout: 20000 })
+    await page.goto(base, { waitUntil: 'networkidle', timeout: 20000 })
     await page.waitForFunction(() => document.documentElement.dataset.fontSource)
     await page.evaluate(() => document.fonts.ready)
     const dimensions = await page.evaluate(() => ({ viewport: innerWidth, content: document.documentElement.scrollWidth, headings: [...document.querySelectorAll('h2')].map(heading => heading.textContent), skills: document.querySelectorAll('.skill-card').length, fontSource: document.documentElement.dataset.fontSource, loadedFontFaces: [...document.fonts].filter(face => face.status === 'loaded').map(face => face.family), heroVideo: document.querySelector('.hero-video').getBoundingClientRect().top, heroText: document.querySelector('.hero-copy').getBoundingClientRect().top }))

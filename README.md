@@ -3,7 +3,7 @@
 Protótipo React + Vite + TypeScript na pasta original do projeto.
 
 ```sh
-npm install
+npm ci
 npm run dev
 npm run build
 ```
@@ -14,10 +14,14 @@ Conteúdo e projetos: `src/data/content.ts`. Os seis Shorts enviados estão em `
 
 Configure `.env` a partir de `.env.example`: `VITE_WHATSAPP_NUMBER` com DDI/DDD e, opcionalmente, `VITE_DEMOREEL_URL` com arquivo local público ou URL direta de vídeo para substituir o YouTube no destaque inicial. Para novos projetos, use `youtubeId` para vídeos YouTube, ou `src` para MP4/WebM, `poster` e, quando disponível, `captions` com WebVTT. Sem fonte configurada, o player HTML5 continua permitindo experimentar um arquivo local sem upload.
 
-Fontes Google e GSAP/ScrollTrigger via CDN exigem conexão; sem ela, a página mantém fontes serifadas de fallback e conteúdo estático. GSAP deve passar para import local depois de instalado em um ambiente com acesso ao npm. As dependências do build desta execução foram recuperadas de instalações locais, pois a rede foi bloqueada; não foi possível gerar lockfile pelo registro.
+Painel de administração: `/admin`, sem senha nesta versão. Edite textos, vídeos, feedbacks, imagens, aparência e contato; confira a prévia e use **Salvar alterações** para publicar. O conteúdo salvo persiste no Vercel Blob e aparece para os visitantes. Os valores originais continuam em `src/data/content.ts`. Instruções e limites em `docs/ADMIN.md`.
+
+O projeto agora inclui `package-lock.json`; use `npm ci` para uma instalação reproduzível. Em desenvolvimento sem token do Blob, o painel salva em `.tools/admin/content.json`; na Vercel, utiliza a credencial do servidor vinculada ao projeto. Fontes Google e GSAP/ScrollTrigger via CDN exigem conexão; sem ela, a página mantém fontes serifadas de fallback e conteúdo estático.
 
 Artes geradas: originais em `artwork/generated/`, arquivos usados no site em `public/assets/art/` e prompts finais em `artwork/GENERATION.md`. Caminhos e textos alternativos das cenas estão em `src/data/content.ts`. A nova capa ilustrada do destaque mantém o vídeo principal selecionado; as capas do acervo são as miniaturas oficiais em alta resolução.
 
 QA: execute o servidor e `npm run qa`. O script utiliza Playwright e Edge nesta máquina; em outra, defina `PLAYWRIGHT_CHROMIUM_EXECUTABLE` apontando para seu Chromium. Capturas atuais ficam em `docs/screenshots/one-click/layout/`; as revisões anteriores permanecem separadas. `npm run qa:youtube` exige acesso ao YouTube e confirma reprodução com som após um único clique/toque, sem acionar o play interno nem chamar métodos de reprodução pelo teste. Evidência em `docs/screenshots/one-click/playback.json`. Use `QA_BASE_URL` para testar outro endereço.
 
 Veja `docs/ART_DIRECTION.md`, `docs/IMAGE_PROMPTS.md` e `docs/QA.md`. As skills específicas deste projeto estão em `skills/`; não foram instaladas globalmente.
+
+Teste do painel: com o servidor ativo, execute `npm run qa:admin` usando `QA_BASE_URL` se necessário. Os cadastros usados no teste são locais e o conteúdo original é restaurado ao final; o script recusa um domínio público.

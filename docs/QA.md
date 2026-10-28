@@ -1,5 +1,16 @@
 # Primeira auditoria — 28/10/2026
 
+## Painel de administração — 28/10/2026
+
+- Painel `/admin` sem senha, conforme solicitado, com botão Salvar alterações. Abas de textos, vídeos, feedbacks, aparência e backup; prévia isolada e recuperação de rascunho no navegador. O salvamento publica via API e armazenamento persistente do Vercel Blob.
+- `npm run build`: frontend e backend aprovados. Instalado SDK do Blob e criado lockfile. `npm audit --omit=dev`: zero vulnerabilidades após corrigir uma dependência indireta; a auditoria completa ainda aponta alertas em ferramentas de desenvolvimento já usadas no projeto.
+- `npm run qa:admin`: aprovado. A edição permaneceu no rascunho antes do botão salvar; a prévia recebeu as alterações; o rascunho sobreviveu a recarga; o conteúdo salvo apareceu em outro contexto de navegador.
+- Confirmados adicionar, editar, reordenar, remover e salvar vídeos; feedback com imagem/texto, upload de imagem real, reordenação e persistência; exportação/importação de backup; cores e visibilidade aplicadas no site público; resposta 409 para revisão desatualizada e 400 para link executável; listas vazias sem exceções.
+- Admin validado em 390, 768 e 1440px, sem overflow horizontal. Capturas de visão geral, vídeos e feedbacks em `docs/screenshots/admin/`; imagens abertas e examinadas. Todos os dados de teste ficaram no ambiente local, com o conteúdo original restaurado.
+- Site público validado nas três larguras com `npm run qa`, após finalizar os testes de mutação. Uma execução anterior coincidiu com um feedback temporário do teste do painel e foi repetida depois da restauração do conteúdo.
+- `npm run qa:youtube`: os 17 cenários de clique/toque únicos e som habilitado continuaram aprovados após conectar o site ao conteúdo editável.
+- Limites: esta versão não autentica os editores, por decisão explícita do usuário. O teste mobile usa emulação de toque, sem aparelho físico. O QA visual bloqueia HTTPS externo e usa fontes de fallback; reprodução real é testada separadamente. Conteúdo remoto indisponível mantém a última cópia válida ou os valores originais; falha de salvamento é informada e mantém o rascunho.
+
 ## Setas da interface em SVG — 28/10/2026
 
 - Substituídas as setas Unicode dos CTAs, link do canal, expansão de feedback e navegação dos carrosséis por um componente SVG com traço na cor do elemento. A apresentação não depende de glifos de emoji do sistema.

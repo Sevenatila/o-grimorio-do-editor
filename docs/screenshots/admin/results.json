@@ -1,0 +1,17 @@
+{
+  "result": "passed",
+  "widths": [
+    390,
+    768,
+    1440
+  ],
+  "persistence": "independent browser context",
+  "videoCrud": "passed",
+  "feedbackCrudAndUpload": "passed",
+  "themeAndVisibility": "passed",
+  "staleRevision": "409",
+  "unsafeLink": "400",
+  "emptyLists": "passed",
+  "errors": [],
+  "dataPolicy": "All mutation tests ran only on the local development API; baseline restored."
+}
