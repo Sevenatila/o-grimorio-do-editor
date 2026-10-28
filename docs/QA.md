@@ -2,6 +2,8 @@
 
 ## Painel de administração — 28/10/2026
 
+- Produção confirmada em `https://o-grimorio-do-editor.vercel.app/admin`: botão Salvar alterações usado duas vezes, leitura imediata pela API e conteúdo confirmado em outro navegador. Os seis vídeos e quinze feedbacks originais foram preservados. O teste do botão alternou somente a capitalização de uma cor hexadecimal equivalente e restaurou o valor original.
+- Confirmados upload de uma imagem original no Blob público e leitura do arquivo; configurações persistem no Blob privado com cache desativado. A prova em produção identificou e corrigiu a diferença entre ETags de leitura/gravação e o cache do Blob público, que agora recebe apenas imagens. Revisões desatualizadas retornaram 409.
 - Painel `/admin` sem senha, conforme solicitado, com botão Salvar alterações. Abas de textos, vídeos, feedbacks, aparência e backup; prévia isolada e recuperação de rascunho no navegador. O salvamento publica via API e armazenamento persistente do Vercel Blob.
 - `npm run build`: frontend e backend aprovados. Instalado SDK do Blob e criado lockfile. `npm audit --omit=dev`: zero vulnerabilidades após corrigir uma dependência indireta; a auditoria completa ainda aponta alertas em ferramentas de desenvolvimento já usadas no projeto.
 - `npm run qa:admin`: aprovado. A edição permaneceu no rascunho antes do botão salvar; a prévia recebeu as alterações; o rascunho sobreviveu a recarga; o conteúdo salvo apareceu em outro contexto de navegador.
