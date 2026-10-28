@@ -1,5 +1,14 @@
 # Primeira auditoria — 28/10/2026
 
+## Reprodução com uma ação do usuário — 28/10/2026
+
+- O destaque é preparado antes do clique; o acervo usa iframe com `loading="lazy"`. A API oficial recebe `playVideo()` no clique/toque, com o iframe já exibido. Um pedido feito antes de `onReady` é executado assim que o player fica pronto. O carregamento inicial usa `autoplay=0`; não foi adicionado silenciamento automático.
+- `npm run build`: aprovado. `npm run qa`: aprovado em 390, 768 e 1440px, incluindo navegação, foco, capas, proporções, feedbacks e contato. Evidências atuais em `docs/screenshots/one-click/layout/`.
+- `npm run qa:youtube`: 17 cenários aprovados com acesso real ao YouTube: capa principal, CTA principal e seis itens do acervo em desktop e emulação mobile com toque, mais acionamento por Enter no desktop. Cada caso usa uma única ação e só observa o vídeo interno; o teste não clica no play do YouTube nem chama métodos de reprodução. Confirmados avanço do tempo, `paused: false`, `muted: false` e volume maior que zero. Contextos novos e bypass de media engagement desabilitado. Resultados em `docs/screenshots/one-click/playback.json`.
+- Correção na evidência anterior: o teste usado nas entregas precedentes também acionava controles internos e `video.play()`, portanto comprovava disponibilidade/reprodução, mas não um único clique. Ele foi substituído pelo teste acima. O relato de dois cliques não se reproduziu no teste isolado do Edge antes da alteração; o novo fluxo reduz a dependência do autoplay durante o carregamento do iframe.
+- Ao iniciar outro vídeo, o anterior recebe `stopVideo()` e volta à capa. Trocar de projeto destrói o player anterior; pedidos pendentes são cancelados. “Voltar à capa” restaura foco ao play. Quando o iframe não aceita foco, como no QA que bloqueia a rede, o foco vai à moldura identificada pelo título do vídeo.
+- Limites reais: mobile foi validado por emulação de toque em Chromium/Edge, sem iPhone/Safari físico. Políticas restritivas do navegador e bloqueio do serviço não são contornados: erro de conexão e `onAutoplayBlocked` apresentam mensagem e mantêm os controles nativos/link alternativo. A API e os eventos seguem a [documentação oficial do YouTube](https://developers.google.com/youtube/iframe_api_reference); as restrições de autoplay são descritas pelo [Chrome](https://developer.chrome.com/blog/autoplay/).
+
 ## Renovação visual: players e quatro artes geradas — 28/10/2026
 
 - Quatro imagens criadas com a ferramenta integrada `image_gen`: capa do editor no scriptorium, gravura da cidade para a Jornada, mesa com livros e vela para o Epílogo e textura de pergaminho. Originais PNG em `artwork/generated/`; prompts finais e proveniência em `artwork/GENERATION.md`; WebP e variantes menores para celular em `public/assets/art/`. Referências e SVGs anteriores preservados.

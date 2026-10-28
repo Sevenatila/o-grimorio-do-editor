@@ -1,0 +1,159 @@
+{
+  "base": "http://127.0.0.1:5173/",
+  "results": [
+    {
+      "mobile": false,
+      "action": "one cover click/tap",
+      "id": "9FwdP60SSpc",
+      "time": 0.551453,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": false,
+      "action": "one presentation CTA click/tap",
+      "id": "9FwdP60SSpc",
+      "time": 0.712268,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": false,
+      "action": "one Enter key",
+      "id": "9FwdP60SSpc",
+      "time": 0.754499,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": false,
+      "action": "one gallery cover click/tap",
+      "id": "oF7MRtebWHs",
+      "time": 0.679149,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": false,
+      "action": "one gallery cover click/tap",
+      "id": "9FwdP60SSpc",
+      "time": 0.53542,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": false,
+      "action": "one gallery cover click/tap",
+      "id": "QstQJOrkq2k",
+      "time": 0.578086,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": false,
+      "action": "one gallery cover click/tap",
+      "id": "rwz_finz-Y0",
+      "time": 0.694389,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": false,
+      "action": "one gallery cover click/tap",
+      "id": "fCXZFommLOA",
+      "time": 0.557229,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": false,
+      "action": "one gallery cover click/tap",
+      "id": "bnOoqp2OafA",
+      "time": 0.551822,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": true,
+      "action": "one cover click/tap",
+      "id": "9FwdP60SSpc",
+      "time": 1.39505,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": true,
+      "action": "one presentation CTA click/tap",
+      "id": "9FwdP60SSpc",
+      "time": 0.869886,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": true,
+      "action": "one gallery cover click/tap",
+      "id": "oF7MRtebWHs",
+      "time": 0.538481,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": true,
+      "action": "one gallery cover click/tap",
+      "id": "9FwdP60SSpc",
+      "time": 0.526001,
+      "paused": false,
+      "muted": false,
+      "volume": 0.9988493699365051
+    },
+    {
+      "mobile": true,
+      "action": "one gallery cover click/tap",
+      "id": "QstQJOrkq2k",
+      "time": 0.533537,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": true,
+      "action": "one gallery cover click/tap",
+      "id": "rwz_finz-Y0",
+      "time": 0.633945,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": true,
+      "action": "one gallery cover click/tap",
+      "id": "fCXZFommLOA",
+      "time": 0.661695,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "mobile": true,
+      "action": "one gallery cover click/tap",
+      "id": "bnOoqp2OafA",
+      "time": 0.563248,
+      "paused": false,
+      "muted": false,
+      "volume": 1
+    }
+  ],
+  "testPolicy": "Fresh contexts, no autoplay-policy bypass, one user action, no internal clicks or test-triggered play commands."
+}

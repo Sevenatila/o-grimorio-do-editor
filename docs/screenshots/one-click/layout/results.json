@@ -1,0 +1,122 @@
+[
+  {
+    "width": 390,
+    "viewport": 390,
+    "content": 390,
+    "headings": [
+      "De onde vim e onde cheguei: A Jornada",
+      "Acervo de contos Portfólio",
+      "O meu arsenal O Grimório",
+      "Feedbacks Dos Clientes",
+      "Vamos contar A Sua História?"
+    ],
+    "skills": 7,
+    "fontSource": "fallback",
+    "loadedFontFaces": [],
+    "heroVideo": 122,
+    "heroText": 713.71875,
+    "errors": [],
+    "order": [
+      "hero",
+      "jornada",
+      "acervo",
+      "grimorio",
+      "feedbacks",
+      "epilogo"
+    ],
+    "controls": "passed",
+    "feedbackImages": 15,
+    "feedbackModalAndNavigation": "passed",
+    "youtubeIntegration": "passed",
+    "youtubeIds": [
+      "oF7MRtebWHs",
+      "9FwdP60SSpc",
+      "QstQJOrkq2k",
+      "rwz_finz-Y0",
+      "fCXZFommLOA",
+      "bnOoqp2OafA"
+    ],
+    "presentationId": "9FwdP60SSpc",
+    "youtubeNetwork": "External HTTPS blocked deliberately; playback not checked by this offline audit."
+  },
+  {
+    "width": 768,
+    "viewport": 768,
+    "content": 768,
+    "headings": [
+      "De onde vim e onde cheguei: A Jornada",
+      "Acervo de contos Portfólio",
+      "O meu arsenal O Grimório",
+      "Feedbacks Dos Clientes",
+      "Vamos contar A Sua História?"
+    ],
+    "skills": 7,
+    "fontSource": "fallback",
+    "loadedFontFaces": [],
+    "heroVideo": 148.78125,
+    "heroText": 793.828125,
+    "errors": [],
+    "order": [
+      "hero",
+      "jornada",
+      "acervo",
+      "grimorio",
+      "feedbacks",
+      "epilogo"
+    ],
+    "controls": "passed",
+    "feedbackImages": 15,
+    "feedbackModalAndNavigation": "passed",
+    "youtubeIntegration": "passed",
+    "youtubeIds": [
+      "oF7MRtebWHs",
+      "9FwdP60SSpc",
+      "QstQJOrkq2k",
+      "rwz_finz-Y0",
+      "fCXZFommLOA",
+      "bnOoqp2OafA"
+    ],
+    "presentationId": "9FwdP60SSpc",
+    "youtubeNetwork": "External HTTPS blocked deliberately; playback not checked by this offline audit."
+  },
+  {
+    "width": 1440,
+    "viewport": 1440,
+    "content": 1440,
+    "headings": [
+      "De onde vim e onde cheguei: A Jornada",
+      "Acervo de contos Portfólio",
+      "O meu arsenal O Grimório",
+      "Feedbacks Dos Clientes",
+      "Vamos contar A Sua História?"
+    ],
+    "skills": 7,
+    "fontSource": "fallback",
+    "loadedFontFaces": [],
+    "heroVideo": 198,
+    "heroText": 332.6875,
+    "errors": [],
+    "order": [
+      "hero",
+      "jornada",
+      "acervo",
+      "grimorio",
+      "feedbacks",
+      "epilogo"
+    ],
+    "controls": "passed",
+    "feedbackImages": 15,
+    "feedbackModalAndNavigation": "passed",
+    "youtubeIntegration": "passed",
+    "youtubeIds": [
+      "oF7MRtebWHs",
+      "9FwdP60SSpc",
+      "QstQJOrkq2k",
+      "rwz_finz-Y0",
+      "fCXZFommLOA",
+      "bnOoqp2OafA"
+    ],
+    "presentationId": "9FwdP60SSpc",
+    "youtubeNetwork": "External HTTPS blocked deliberately; playback not checked by this offline audit."
+  }
+]

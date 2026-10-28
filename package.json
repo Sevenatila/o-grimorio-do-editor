@@ -7,7 +7,8 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "qa": "node scripts/visual-audit.mjs"
+    "qa": "node scripts/visual-audit.mjs",
+    "qa:youtube": "node scripts/youtube-playback.mjs"
   },
   "dependencies": {
     "gsap": "^3.12.5",

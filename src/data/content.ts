@@ -37,6 +37,9 @@ export const mediaLabels = {
   playHint: 'Uma história em movimento',
   source: 'Abrir no YouTube',
   backToCover: 'Voltar à capa',
+  loading: 'Preparando o vídeo…',
+  unavailable: 'Não foi possível conectar ao player. Você também pode abrir o vídeo no YouTube.',
+  playbackBlocked: 'Seu navegador bloqueou a reprodução. Use o play do vídeo para continuar.',
 }
 
 export const artwork = {

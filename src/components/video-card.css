@@ -69,6 +69,10 @@
   border: 0;
 }
 
+.youtube-host { position: absolute; inset: 0; }
+.youtube-host[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+.youtube-card .youtube-status { color: var(--video-muted); }
+
 .youtube-launch {
   padding: 0;
   isolation: isolate;

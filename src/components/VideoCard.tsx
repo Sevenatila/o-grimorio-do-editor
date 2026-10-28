@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { mediaLabels, type Project } from '../data/content'
+import { loadYouTubeAPI, type YouTubePlayer } from '../lib/youtube'
 import { Flourish, FrameCorners } from './Ornaments'
 import './video-card.css'
 
@@ -9,8 +11,15 @@ export function VideoCard({ project, hero = false }: { project: Project; hero?: 
   const [localSource, setLocalSource] = useState('')
   const [error, setError] = useState(false)
   const [youtubeActive, setYoutubeActive] = useState(false)
+  const [youtubeReady, setYoutubeReady] = useState(false)
+  const [youtubeError, setYoutubeError] = useState('')
   const videoRef = useRef<HTMLVideoElement>(null)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement | null>(null)
+  const hostRef = useRef<HTMLDivElement>(null)
+  const playerRef = useRef<YouTubePlayer | null>(null)
+  const readyRef = useRef(false)
+  const apiFailed = useRef(false)
+  const playRequested = useRef(false)
   const launchRef = useRef<HTMLButtonElement>(null)
   const instanceId = useId()
   const source = localSource || project.src
@@ -20,6 +29,8 @@ export function VideoCard({ project, hero = false }: { project: Project; hero?: 
   useEffect(() => {
     const stopPlayback = (event: Event) => {
       if ((event as CustomEvent<string>).detail !== instanceId) {
+        playRequested.current = false
+        if (readyRef.current) playerRef.current?.stopVideo()
         setYoutubeActive(false)
         videoRef.current?.pause()
       }
@@ -28,27 +39,97 @@ export function VideoCard({ project, hero = false }: { project: Project; hero?: 
     return () => document.removeEventListener(playbackEvent, stopPlayback)
   }, [instanceId])
   useEffect(() => {
-    if (youtubeActive) iframeRef.current?.focus({ preventScroll: true })
+    const host = hostRef.current
+    if (!isYouTube || !host || !project.youtubeId) return
+    let disposed = false
+    let player: YouTubePlayer | undefined
+    readyRef.current = false
+    apiFailed.current = false
+    playRequested.current = false
+    setYoutubeReady(false)
+    setYoutubeError('')
+
+    // The host owns the iframe so the API can safely destroy it, including in StrictMode.
+    const iframe = document.createElement('iframe')
+    const parameters = new URLSearchParams({ enablejsapi: '1', origin: location.origin, autoplay: '0', playsinline: '1', rel: '0', hl: 'pt-BR' })
+    iframe.src = `https://www.youtube-nocookie.com/embed/${project.youtubeId}?${parameters}`
+    iframe.title = `YouTube — ${project.title}`
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin'
+    iframe.allowFullscreen = true
+    iframe.loading = hero ? 'eager' : 'lazy'
+    host.append(iframe)
+    iframeRef.current = iframe
+
+    void loadYouTubeAPI().then(api => {
+      if (disposed) return
+      player = new api.Player(iframe, {
+        events: {
+          onReady: event => {
+            if (disposed) return
+            readyRef.current = true
+            setYoutubeReady(true)
+            if (playRequested.current) event.target.playVideo()
+          },
+          onStateChange: event => {
+            if (disposed || event.data !== 1) return
+            if (!playRequested.current) { event.target.stopVideo(); return }
+            setYoutubeError('')
+            announcePlayback()
+            const frame = iframeRef.current
+            if (frame && document.activeElement === frame.closest('.video-frame')) frame.focus({ preventScroll: true })
+          },
+          onError: () => { if (!disposed) setYoutubeError(mediaLabels.unavailable) },
+          onAutoplayBlocked: () => { if (!disposed) setYoutubeError(mediaLabels.playbackBlocked) },
+        },
+      })
+      playerRef.current = player
+    }).catch(() => {
+      if (!disposed) { apiFailed.current = true; setYoutubeError(mediaLabels.unavailable) }
+    })
+
+    return () => {
+      disposed = true
+      readyRef.current = false
+      playRequested.current = false
+      playerRef.current = null
+      iframeRef.current = null
+      player?.destroy()
+      host.replaceChildren()
+    }
+  }, [isYouTube, project.youtubeId, project.title, hero])
+  useEffect(() => {
+    if (!youtubeActive) return
+    const frame = requestAnimationFrame(() => {
+      const iframe = iframeRef.current
+      iframe?.focus({ preventScroll: true })
+      if (iframe && document.activeElement !== iframe) iframe.closest<HTMLElement>('.video-frame')?.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(frame)
   }, [youtubeActive])
 
   const announcePlayback = () => document.dispatchEvent(new CustomEvent(playbackEvent, { detail: instanceId }))
+  const startYouTube = () => {
+    announcePlayback()
+    playRequested.current = true
+    setYoutubeError(apiFailed.current ? mediaLabels.unavailable : '')
+    // Reveal the prepared player and issue playVideo during the same user gesture.
+    flushSync(() => setYoutubeActive(true))
+    if (readyRef.current) playerRef.current?.playVideo()
+  }
   const backToCover = () => {
+    playRequested.current = false
+    if (readyRef.current) playerRef.current?.stopVideo()
     setYoutubeActive(false)
     requestAnimationFrame(() => launchRef.current?.focus({ preventScroll: true }))
   }
 
   return <div className={`video-card ${hero ? 'hero-video' : ''} ${isYouTube ? 'youtube-card' : ''} ${project.format === 'portrait' ? 'portrait-video' : ''} ${youtubeActive ? 'is-playing' : ''}`}>
     {isYouTube && <div className="video-heading"><span>{hero ? mediaLabels.presentation : mediaLabels.collection}</span><span className="video-format">{mediaLabels.format}</span></div>}
-    <div id={hero ? 'demoreel-player' : undefined} className="video-frame" tabIndex={-1}>
+    <div id={hero ? 'demoreel-player' : undefined} className="video-frame" role="group" aria-label={project.title} tabIndex={-1}>
       {isYouTube ? <div className="youtube-player">
-        {youtubeActive ? <iframe
-          ref={iframeRef}
-          src={`https://www.youtube-nocookie.com/embed/${project.youtubeId}?autoplay=1&playsinline=1&rel=0&hl=pt-BR`}
-          title={`YouTube — ${project.title}`}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        /> : <button ref={launchRef} className="youtube-launch" aria-label={`Reproduzir ${project.title}`} onClick={() => { announcePlayback(); setYoutubeActive(true) }}>
+        <div ref={hostRef} className="youtube-host" aria-hidden={!youtubeActive}/>
+        {!youtubeActive && <button ref={launchRef} className="youtube-launch" aria-label={`Reproduzir ${project.title}`} onClick={startYouTube}>
           <img src={project.poster} alt="" loading={hero ? 'eager' : 'lazy'} />
           <span className="youtube-play-label">
             <span className="play-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M12 7.5 25 16 12 24.5Z" fill="currentColor"/></svg></span>
@@ -63,6 +144,7 @@ export function VideoCard({ project, hero = false }: { project: Project; hero?: 
       </>}
       <FrameCorners/>
     </div>
+    {isYouTube && youtubeActive && (youtubeError || !youtubeReady) && <p className="media-note youtube-status" role="status">{youtubeError || mediaLabels.loading}</p>}
     {localSource && <p className="media-note">Prévia local · arquivo apenas neste navegador.</p>}
     {(!hero || isYouTube) && <div className="video-caption">
       {!hero && <><Flourish className="video-flourish"/><span className="eyebrow">{project.category}</span><h3>{project.title}</h3>{project.description && <p>{project.description}</p>}</>}
