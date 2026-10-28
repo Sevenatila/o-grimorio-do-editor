@@ -9,6 +9,8 @@ const namespace = process.env.VERCEL_ENV || 'development'
 const pathname = namespace + '/site-content.json'
 const localPath = join(process.cwd(), '.tools', 'admin', 'content.json')
 export class ConflictError extends Error {}
+// Public downloads can return a weak HTTP ETag; writes require the strong value.
+const revisionTag = (etag: string) => etag.replace(/^W\//, '')
 export const storageName = () => process.env.BLOB_READ_WRITE_TOKEN ? 'vercel-blob' : process.env.VERCEL ? 'unavailable' : 'local-development'
 
 export async function readSaved() {
@@ -16,7 +18,7 @@ export async function readSaved() {
     const result = await get(pathname, { access: 'public', useCache: false })
     if (!result?.stream) return { content: null, revision: null, updatedAt: null, storage: storageName() }
     const saved = JSON.parse(await new Response(result.stream).text()) as Saved
-    return { ...saved, revision: result.blob.etag, storage: storageName() }
+    return { ...saved, revision: revisionTag(result.blob.etag), storage: storageName() }
   }
   if (process.env.VERCEL) throw new Error('O armazenamento do painel ainda não está configurado.')
   try { return { ...JSON.parse(await readFile(localPath, 'utf8')), storage: storageName() } }
@@ -32,7 +34,7 @@ export async function writeSaved(content: SiteContent, revision: string | null) 
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       try {
         const result = await put(pathname, JSON.stringify(saved), { access: 'public', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: !!revision, ...(revision ? { ifMatch: revision } : {}), cacheControlMaxAge: 60 })
-        return { ...saved, revision: result.etag, storage: storageName() }
+        return { ...saved, revision: revisionTag(result.etag), storage: storageName() }
       } catch (error) {
         if (error instanceof BlobPreconditionFailedError || String(error).includes('already exists')) throw new ConflictError('Outra alteração foi salva agora. Recarregue o conteúdo salvo para continuar.')
         throw error
