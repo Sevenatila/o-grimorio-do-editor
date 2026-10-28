@@ -8,14 +8,15 @@ type Saved = { content: SiteContent; updatedAt: string }
 const namespace = process.env.VERCEL_ENV || 'development'
 const pathname = namespace + '/site-content.json'
 const localPath = join(process.cwd(), '.tools', 'admin', 'content.json')
+const contentToken = () => process.env.CONTENT_READ_WRITE_TOKEN
 export class ConflictError extends Error {}
 // Public downloads can return a weak HTTP ETag; writes require the strong value.
 const revisionTag = (etag: string) => etag.replace(/^W\//, '')
-export const storageName = () => process.env.BLOB_READ_WRITE_TOKEN ? 'vercel-blob' : process.env.VERCEL ? 'unavailable' : 'local-development'
+export const storageName = () => contentToken() ? 'vercel-blob' : process.env.VERCEL ? 'unavailable' : 'local-development'
 
 export async function readSaved() {
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    const result = await get(pathname, { access: 'public', useCache: false })
+  if (contentToken()) {
+    const result = await get(pathname, { access: 'private', token: contentToken(), useCache: false })
     if (!result?.stream) return { content: null, revision: null, updatedAt: null, storage: storageName() }
     const saved = JSON.parse(await new Response(result.stream).text()) as Saved
     return { ...saved, revision: revisionTag(result.blob.etag), storage: storageName() }
@@ -31,9 +32,9 @@ export async function writeSaved(content: SiteContent, revision: string | null) 
     const current = await readSaved()
     if (current.revision !== revision) throw new ConflictError('O site foi atualizado em outro lugar. Exporte seu rascunho e recarregue o conteúdo salvo antes de continuar.')
     const saved = { content, updatedAt: new Date().toISOString() }
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
+    if (contentToken()) {
       try {
-        const result = await put(pathname, JSON.stringify(saved), { access: 'public', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: !!revision, ...(revision ? { ifMatch: revision } : {}), cacheControlMaxAge: 60 })
+        const result = await put(pathname, JSON.stringify(saved), { access: 'private', token: contentToken(), contentType: 'application/json', addRandomSuffix: false, allowOverwrite: !!revision, ...(revision ? { ifMatch: revision } : {}), cacheControlMaxAge: 60 })
         return { ...saved, revision: revisionTag(result.etag), storage: storageName() }
       } catch (error) {
         if (error instanceof BlobPreconditionFailedError || String(error).includes('already exists')) throw new ConflictError('Outra alteração foi salva agora. Recarregue o conteúdo salvo para continuar.')
@@ -47,7 +48,7 @@ export async function writeSaved(content: SiteContent, revision: string | null) 
     await rename(temporary, localPath)
     return result
   }
-  if (process.env.BLOB_READ_WRITE_TOKEN) return commit()
+  if (contentToken()) return commit()
   const pending = localQueue.then(commit, commit)
   localQueue = pending.catch(() => {})
   return pending

@@ -36,8 +36,8 @@ A aba Backup exporta o rascunho em JSON e importa um arquivo válido para revis�
 ## Persistência
 
 - Os valores originais continuam em `src/data/content.ts`, como `defaultContent`.
-- Em produção, `api/content.ts` lê e grava JSON no Vercel Blob; `api/media.ts` recebe as imagens. O armazenamento foi criado e vinculado ao projeto da Vercel.
-- `BLOB_READ_WRITE_TOKEN` fica exclusivamente no servidor, injetado pela integração da Vercel. Não deve usar prefixo `VITE_`.
+- Em produção, `api/content.ts` lê e grava JSON em um armazenamento privado do Vercel Blob, com leitura sem cache (`useCache: false`). `api/media.ts` recebe imagens em um armazenamento público separado. Ambos estão vinculados ao projeto.
+- `CONTENT_READ_WRITE_TOKEN` (configurações) e `BLOB_READ_WRITE_TOKEN` (imagens) ficam exclusivamente no servidor, injetados pelas integrações da Vercel. Não devem usar prefixo `VITE_`.
 - Leituras usam `useCache: false`; a API retorna `Cache-Control: no-store`. A revisão/ETag impede sobrescrever uma edição mais recente sem recarregar.
 - O namespace é separado por `VERCEL_ENV` (production, preview ou development).
 - Sem token em desenvolvimento local, o conteúdo é gravado em `.tools/admin/content.json` e imagens em `public/uploads/`. Essas pastas são ignoradas pelo Git.
