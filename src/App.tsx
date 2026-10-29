@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { artwork } from './data/content'
-import { useContent } from './context/ContentContext'
+import { useContent, useLocale, useUI } from './context/ContentContext'
 import { featuredVideo, isSafeUrl, toProject, type SectionKey, type SiteContent } from './lib/content-model'
 import { SectionHeading } from './components/SectionHeading'
 import { ArrowIcon, Flourish, SkillSymbol } from './components/Ornaments'
@@ -11,13 +11,15 @@ const sectionIds: Record<SectionKey, string> = { journey: 'jornada', portfolio: 
 
 function Header() {
   const content = useContent()
+  const locale = useLocale()
+  const labels = useUI()
   const [open, setOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const items = (Object.keys(sectionIds) as SectionKey[]).filter(key => content.visible[key])
   return <header className="header">
-    <a className="identity" href="#inicio" aria-label={content.general.name + ' — início'}><span className="seal" aria-hidden="true">{[...content.general.name][0]}</span><span className="identity-name">{content.general.name}</span></a>
-    <button ref={toggleRef} className="menu-toggle" aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}><span/><span/><span/></button>
-    <nav id="main-navigation" className={open ? 'navigation is-open' : 'navigation'} aria-label="Navegação principal" onKeyDown={event => { if (event.key === 'Escape') { setOpen(false); toggleRef.current?.focus() } }}>{items.map(key => <a key={key} href={'#' + sectionIds[key]} onClick={() => setOpen(false)}>{content.navigation[key]}</a>)}</nav>
+    <a className="identity" href="#inicio" aria-label={content.general.name + ' — ' + labels.home}><span className="seal" aria-hidden="true">{[...content.general.name][0]}</span><span className="identity-name">{content.general.name}</span></a>
+    <nav id="main-navigation" className={open ? 'navigation is-open' : 'navigation'} aria-label={labels.navigation} onKeyDown={event => { if (event.key === 'Escape') { setOpen(false); toggleRef.current?.focus() } }}>{items.map(key => <a key={key} href={'#' + sectionIds[key]} onClick={() => setOpen(false)}>{content.navigation[key]}</a>)}</nav>
+    <div className="header-tools"><div className="language-switch" role="group" aria-label={labels.language}><a href={'/' + location.hash} hrefLang="pt-BR" lang="pt-BR" aria-label={labels.portuguese} aria-current={locale === 'pt' ? 'page' : undefined}>PT</a><span aria-hidden="true">/</span><a href={'/en' + location.hash} hrefLang="en" lang="en" aria-label={labels.english} aria-current={locale === 'en' ? 'page' : undefined}>EN</a></div><button ref={toggleRef} className="menu-toggle" aria-label={open ? labels.closeMenu : labels.openMenu} aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}><span/><span/><span/></button></div>
   </header>
 }
 
@@ -55,24 +57,25 @@ function Journey() {
 
 function PortfolioGallery() {
   const content = useContent()
+  const labels = useUI()
   const projects = content.portfolio.videos
-  const [category, setCategory] = useState('Todos')
+  const [category, setCategory] = useState(labels.all)
   const [index, setIndex] = useState(0)
-  const categories = ['Todos', ...new Set(projects.map(project => project.category))]
-  const selectedCategory = categories.includes(category) ? category : 'Todos'
-  const filtered = projects.filter(project => selectedCategory === 'Todos' || selectedCategory === project.category)
+  const categories = [labels.all, ...new Set(projects.map(project => project.category))]
+  const selectedCategory = categories.includes(category) ? category : labels.all
+  const filtered = projects.filter(project => selectedCategory === labels.all || selectedCategory === project.category)
   const safeIndex = Math.min(index, Math.max(0, filtered.length - 1))
   const active = filtered[safeIndex]
   return <section id="acervo" className="section portfolio" aria-labelledby="portfolio-title">
     <div className="section-intro reveal"><SectionHeading id="portfolio-title" {...content.portfolio.heading}/><p>{content.portfolio.intro}</p></div>
     {projects.length > 0 ? <>
-      <div className="portfolio-tabs" role="group" aria-label="Filtrar projetos">{categories.map(item => <button key={item} aria-pressed={selectedCategory === item} className={selectedCategory === item ? 'active' : ''} onClick={() => { setCategory(item); setIndex(0) }}>{item}</button>)}</div>
-      <div className="portfolio-stage" aria-live="polite">{active && <VideoCard key={active.id + active.url} project={toProject(active)}><div className="portfolio-playlist" role="group" aria-label="Escolher vídeo do acervo">{filtered.map((project, position) => <button key={project.id} type="button" aria-label={'Selecionar ' + project.title} aria-pressed={position === safeIndex} onClick={() => { setIndex(position); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.portfolio-playlist button[aria-pressed="true"]')?.focus({ preventScroll: true })) }}><img src={toProject(project).poster} alt="" loading="lazy" width="48" height="64"/><span><small>{String(position + 1).padStart(2, '0')} · {project.category}</small><span>{project.title}</span></span></button>)}</div></VideoCard>}</div>
-      <div className="gallery-controls"><button className="round-button" aria-label="Projeto anterior" disabled={filtered.length < 2} onClick={() => setIndex((safeIndex - 1 + filtered.length) % filtered.length)}><ArrowIcon direction="left"/></button>
-        <div className="gallery-dots" aria-label="Selecionar projeto">{filtered.map((project, position) => <button key={project.id} className={position === safeIndex ? 'active' : ''} aria-label={'Ver ' + project.title} aria-current={position === safeIndex ? 'true' : undefined} onClick={() => setIndex(position)}/>)}</div>
-        <button className="round-button" aria-label="Próximo projeto" disabled={filtered.length < 2} onClick={() => setIndex((safeIndex + 1) % filtered.length)}><ArrowIcon direction="right"/></button></div>
+      <div className="portfolio-tabs" role="group" aria-label={labels.filter}>{categories.map(item => <button key={item} aria-pressed={selectedCategory === item} className={selectedCategory === item ? 'active' : ''} onClick={() => { setCategory(item); setIndex(0) }}>{item}</button>)}</div>
+      <div className="portfolio-stage" aria-live="polite">{active && <VideoCard key={active.id + active.url} project={toProject(active)}><div className="portfolio-playlist" role="group" aria-label={labels.chooseVideo}>{filtered.map((project, position) => <button key={project.id} type="button" aria-label={labels.select + ' ' + project.title} aria-pressed={position === safeIndex} onClick={() => { setIndex(position); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.portfolio-playlist button[aria-pressed="true"]')?.focus({ preventScroll: true })) }}><img src={toProject(project).poster} alt="" loading="lazy" width="48" height="64"/><span><small>{String(position + 1).padStart(2, '0')} · {project.category}</small><span>{project.title}</span></span></button>)}</div></VideoCard>}</div>
+      <div className="gallery-controls"><button className="round-button" aria-label={labels.previousProject} disabled={filtered.length < 2} onClick={() => setIndex((safeIndex - 1 + filtered.length) % filtered.length)}><ArrowIcon direction="left"/></button>
+        <div className="gallery-dots" aria-label={labels.chooseProject}>{filtered.map((project, position) => <button key={project.id} className={position === safeIndex ? 'active' : ''} aria-label={labels.view + ' ' + project.title} aria-current={position === safeIndex ? 'true' : undefined} onClick={() => setIndex(position)}/>)}</div>
+        <button className="round-button" aria-label={labels.nextProject} disabled={filtered.length < 2} onClick={() => setIndex((safeIndex + 1) % filtered.length)}><ArrowIcon direction="right"/></button></div>
     </> : <p className="content-empty">{content.portfolio.empty}</p>}
-    {content.general.channel && isSafeUrl(content.general.channel) && <a className="text-link" href={content.general.channel} target="_blank" rel="noreferrer">Visite o canal do editor <ArrowIcon/></a>}
+    {content.general.channel && isSafeUrl(content.general.channel) && <a className="text-link" href={content.general.channel} target="_blank" rel="noreferrer">{labels.channel} <ArrowIcon/></a>}
   </section>
 }
 
@@ -103,8 +106,11 @@ function Footer() {
 
 export default function App() {
   const content = useContent()
+  const locale = useLocale()
+  const labels = useUI()
   useEffect(() => {
     const root = document.documentElement
+    root.lang = locale === 'en' ? 'en' : 'pt-BR'
     const palette = content.appearance
     for (const [name, value] of Object.entries({ parchment: palette.paper, ink: palette.ink, gold: palette.gold, burgundy: palette.accent, night: palette.night })) root.style.setProperty('--' + name, value)
     root.style.setProperty('--heading', "'" + palette.headingFont + "', Georgia, serif")
@@ -113,7 +119,7 @@ export default function App() {
     root.style.setProperty('--paper-texture', palette.texture ? 'url(' + JSON.stringify(new URL(palette.texture, location.origin).href) + ')' : 'none')
     document.title = content.general.name + ' — ' + content.general.author
     document.querySelector('meta[name="description"]')?.setAttribute('content', content.hero.description)
-  }, [content])
+  }, [content, locale])
   useEffect(() => {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let dispose: (() => void) | undefined
@@ -131,5 +137,5 @@ export default function App() {
     void setup()
     return () => { cancelled = true; dispose?.() }
   }, [])
-  return <><a className="skip-link" href="#conteudo">Pular para o conteúdo</a><div className="manuscript" id="inicio"><Header/><main id="conteudo"><Hero/>{content.visible.journey && <Journey/>}{content.visible.portfolio && <PortfolioGallery/>}{content.visible.arsenal && <Arsenal/>}{content.visible.feedbacks && <Testimonials/>}{content.visible.contact && <ContactEpilogue/>}</main><Footer/></div></>
+  return <><a className="skip-link" href="#conteudo">{labels.skip}</a><div className="manuscript" id="inicio"><Header/><main id="conteudo"><Hero/>{content.visible.journey && <Journey/>}{content.visible.portfolio && <PortfolioGallery/>}{content.visible.arsenal && <Arsenal/>}{content.visible.feedbacks && <Testimonials/>}{content.visible.contact && <ContactEpilogue/>}</main><Footer/></div></>
 }

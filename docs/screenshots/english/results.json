@@ -1,0 +1,79 @@
+{
+  "result": "passed",
+  "widths": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "menuFont": "14px",
+      "identityRight": 176.03125,
+      "navigationLeft": 0,
+      "navigationRight": 0,
+      "toolsLeft": 186.03125,
+      "headingOverflow": false
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "menuFont": "14px",
+      "identityRight": 206,
+      "navigationLeft": 0,
+      "navigationRight": 0,
+      "toolsLeft": 256.03125,
+      "headingOverflow": false
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "menuFont": "14px",
+      "identityRight": 266.390625,
+      "navigationLeft": 0,
+      "navigationRight": 0,
+      "toolsLeft": 603.640625,
+      "headingOverflow": false
+    },
+    {
+      "width": 1050,
+      "scrollWidth": 1050,
+      "menuFont": "12px",
+      "identityRight": 279,
+      "navigationLeft": 301,
+      "navigationRight": 877.03125,
+      "toolsLeft": 899.03125,
+      "headingOverflow": false
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "menuFont": "13px",
+      "identityRight": 358,
+      "navigationLeft": 390,
+      "navigationRight": 1073.03125,
+      "toolsLeft": 1105.03125,
+      "headingOverflow": false
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "menuFont": "13px",
+      "identityRight": 366,
+      "navigationLeft": 398,
+      "navigationRight": 1225.03125,
+      "toolsLeft": 1257.03125,
+      "headingOverflow": false
+    },
+    {
+      "width": 1920,
+      "scrollWidth": 1920,
+      "menuFont": "13px",
+      "identityRight": 582,
+      "navigationLeft": 614,
+      "navigationRight": 1489.03125,
+      "toolsLeft": 1521.03125,
+      "headingOverflow": false
+    }
+  ],
+  "errors": [],
+  "editing": "English draft, preview, recovery, Save and independent browser passed; Portuguese preserved",
+  "sharedMedia": "Shared URL and translation preserved by ID after reorder",
+  "dataPolicy": "Local mutation tests only; original content restored."
+}

@@ -2,12 +2,18 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import { defaultContent } from '../data/content'
 import { parseContent, type SiteContent } from '../lib/content-model'
 import { readContent } from '../lib/content-api'
+import { localeFromPath, localizeContent, type Locale } from '../lib/localize'
+import { ui } from '../lib/i18n'
 
 export const ContentContext = createContext<SiteContent>(defaultContent)
 export const useContent = () => useContext(ContentContext)
+const LocaleContext = createContext<Locale>('pt')
+export const useLocale = () => useContext(LocaleContext)
+export const useUI = () => ui[useLocale()]
 const cacheKey = 'grimorio:published:v1'
 
 export function PublishedContentProvider({ children }: { children: ReactNode }) {
+  const locale = localeFromPath(location.pathname)
   const preview = new URLSearchParams(location.search).get('preview') === 'admin' && window.parent !== window
   const [content, setContent] = useState(() => {
     if (preview) return defaultContent
@@ -35,5 +41,5 @@ export function PublishedContentProvider({ children }: { children: ReactNode }) 
     window.addEventListener('focus', refresh)
     return () => { controller.abort(); channel?.close(); window.removeEventListener('focus', refresh) }
   }, [preview])
-  return <ContentContext.Provider value={content}>{children}</ContentContext.Provider>
+  return <LocaleContext.Provider value={locale}><ContentContext.Provider value={localizeContent(content, locale)}>{children}</ContentContext.Provider></LocaleContext.Provider>
 }

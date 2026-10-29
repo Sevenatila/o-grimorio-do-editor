@@ -1,5 +1,16 @@
 # Primeira auditoria — 28/10/2026
 
+## Inglês e legibilidade do menu — 28/10/2026
+
+- Menu desktop ampliado de 11 para 13px; na faixa de 1050 a 1199px, de 10 para 12px. Seletor PT/EN visível no cabeçalho, incluindo celular. Português em `/`, inglês em `/en`, com a mesma direção de arte e os mesmos arquivos de mídia.
+- Inglês redigido a partir do conteúdo publicado: identidade, navegação, abertura, biografia, sete habilidades, portfólio, contato, mensagens de WhatsApp, legendas, rodapé e títulos dos seis vídeos. Rótulos dos controles, estados de erro e carregamento, modal, textos acessíveis, título, descrição e atributo `lang` acompanham a versão. Os vídeos e prints de conversa mantêm seus idiomas originais.
+- Aba Versão em inglês adicionada ao painel, com prévia correspondente e salvamento explícito. Traduções de vídeos e feedbacks ligadas por ID; URLs, capas, imagens, cores e visibilidade compartilhadas. Conteúdo antigo recebe a tradução inicial sem alterar seus campos existentes. Salvamento de painel antigo preserva o inglês já publicado.
+- `npm run qa:english`: aprovado em 320, 390, 768, 1050, 1280, 1440 e 1920px. Sem overflow horizontal, títulos cortados ou sobreposição entre marca, navegação e seletor. Confirmados troca PT/EN por clique e teclado, menu, modal de feedback, idioma do iframe, prévia em inglês, recuperação do rascunho, botão Salvar, leitura em outro navegador e português preservado.
+- Também aprovados edição de título de vídeo e texto de feedback em inglês, imagem original preservada, traduções acompanhando reordenação, URL aplicada aos dois idiomas e preservação do inglês em requisição sem o campo novo. Testes de mutação restritos ao ambiente local, com restauração do conteúdo original.
+- O teste de compatibilidade detectou uma corrida entre o salvamento e o timer do rascunho. Corrigida cancelando o timer ao salvar, suspendendo a persistência durante a requisição e ignorando rascunhos iguais ao conteúdo já publicado. A reprodução dirigida e a suíte de inglês passaram após a correção.
+- Compilação e regressões concluídas: `npm run build`, `npm run qa`, `npm run qa:desktop` e `npm run qa:admin` aprovados após a correção. A reprodução real na rota `/en` passou nos 17 casos de clique, toque e Enter com som, usando `npm run qa:youtube`; controles traduzidos mantêm a mesma reprodução sem autoplay inicial.
+- Capturas em `docs/screenshots/english/`: cabeçalho em sete larguras, página em inglês e aba do painel. Versões abertas para revisão visual. Limites: não há tradução automática de novos textos nem dublagem de vídeo; traduções novas são editáveis no painel. As mensagens presentes nas imagens permanecem originais.
+
 ## Revisão da versão para computador — 28/10/2026
 
 - Layout desktop revisto com limite de 1440px, menu sem sobreposição, colunas com largura mínima controlada e destaque reduzido de aproximadamente 840 para 650px, medido com fontes Google carregadas. Em 1050, 1280, 1440 e 1920px, o menu fica separado da marca e o destaque usa cerca de 650px de altura.

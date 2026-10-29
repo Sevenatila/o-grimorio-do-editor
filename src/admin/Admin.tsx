@@ -1,16 +1,17 @@
 import { createContext, useContext, useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { defaultContent } from '../data/content'
-import { cloneContent, featuredVideo, parseContent, youtubeId, type SectionKey, type SiteContent, type VideoEntry } from '../lib/content-model'
+import { cloneContent, featuredVideo, parseContent, syncEnglishCollections, youtubeId, type SectionKey, type SiteContent, type VideoEntry } from '../lib/content-model'
 import { readContent, saveContent, uploadImage } from '../lib/content-api'
 import './admin.css'
 
-type Tab = 'overview' | 'content' | 'videos' | 'feedbacks' | 'appearance' | 'backup'
+type Tab = 'overview' | 'content' | 'videos' | 'feedbacks' | 'appearance' | 'english' | 'backup'
 const tabs: { id: Tab; label: string; subtitle: string }[] = [
   { id: 'overview', label: 'Visão geral', subtitle: 'Seu conteúdo, em um só lugar.' },
   { id: 'content', label: 'Textos do site', subtitle: 'Ajuste cada capítulo da sua história.' },
   { id: 'videos', label: 'Vídeos', subtitle: 'Organize o acervo e escolha o vídeo principal.' },
   { id: 'feedbacks', label: 'Feedbacks', subtitle: 'Adicione imagens e depoimentos recebidos.' },
   { id: 'appearance', label: 'Aparência', subtitle: 'Cores, imagens e detalhes da sua identidade.' },
+  { id: 'english', label: 'Versão em inglês', subtitle: 'Textos naturais em inglês, com os mesmos vídeos e a mesma identidade.' },
   { id: 'backup', label: 'Backup', subtitle: 'Guarde uma cópia e recupere seu conteúdo.' },
 ]
 const sectionNames: Record<SectionKey, string> = { journey: 'A Jornada', portfolio: 'Portfólio', arsenal: 'O Grimório', feedbacks: 'Feedbacks', contact: 'Contato' }
@@ -28,6 +29,7 @@ function Icon({ name }: { name: string }) {
     feedbacks: 'M3 4h18v13H9l-6 4zM7 8h10M7 12h6',
     appearance: 'M12 3a9 9 0 1 0 0 18h2a2 2 0 0 0 0-4h-1a2 2 0 0 1 0-4h3a5 5 0 0 0 0-10zM7 8h.01M6 13h.01M12 6h.01M17 7h.01',
     backup: 'M5 3h14v18H5zM8 3v6h8V3M8 16h8M8 19h8',
+    english: 'M21 12a9 9 0 1 0-18 0 9 9 0 0 0 18 0M3 12h18M12 3c4 5 4 13 0 18M12 3c-4 5-4 13 0 18',
     plus: 'M12 5v14M5 12h14', save: 'M4 3h13l3 3v15H4zM8 3v7h8V3M8 16h8v5',
     up: 'M12 19V5m-6 6 6-6 6 6', down: 'M12 5v14m-6-6 6 6 6-6',
     trash: 'M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7M14 10v7',
@@ -69,7 +71,32 @@ function Panel({ title, children, description }: { title: string; children: Reac
   return <section className="admin-panel"><div className="admin-panel-heading"><h2>{title}</h2>{description && <p>{description}</p>}</div>{children}</section>
 }
 
-function Preview({ draft }: { draft: SiteContent }) {
+function EnglishEditor() {
+  const { draft, update } = useEditor()
+  const [section, setSection] = useState<'texts' | 'videos' | 'feedbacks'>('texts')
+  return <>
+    <Panel title="Seu portfólio também em inglês" description="Edite os textos desta versão e clique em Salvar alterações. Vídeos, imagens, links e cores são compartilhados com o português; cada tradução acompanha seu vídeo ou feedback mesmo quando você muda a ordem.">
+      <a className="admin-inline-button" href="/en" target="_blank" rel="noreferrer">Abrir a versão em inglês<Icon name="arrow"/></a>
+      <div className="admin-language-tabs" role="group" aria-label="Conteúdo em inglês">{([['texts', 'Textos e navegação'], ['videos', 'Títulos dos vídeos'], ['feedbacks', 'Textos dos feedbacks']] as const).map(([id, label]) => <button key={id} type="button" className="admin-button admin-button-light" aria-pressed={section === id} onClick={() => setSection(id)}>{label}</button>)}</div>
+    </Panel>
+    {section === 'texts' && <>
+      <Panel title="Identidade e menu em inglês"><div className="admin-fields"><Field label="Nome do site em inglês" path="english.general.name"/><Field label="Especialidade em inglês" path="english.general.role"/><Field label="Mensagem do WhatsApp em inglês" path="english.general.message" area/>{(Object.keys(sectionNames) as SectionKey[]).map(key => <Field key={key} label={'Menu em inglês: ' + sectionNames[key]} path={'english.navigation.' + key}/>)}</div></Panel>
+      <Panel title="Abertura em inglês"><div className="admin-fields"><Field label="Título principal em inglês" path="english.hero.title" area/><Field label="Descrição da abertura em inglês" path="english.hero.description" area/><Field label="Botão principal em inglês" path="english.hero.cta"/><Field label="Frase da abertura em inglês" path="english.hero.tagline"/><Field label="Assinatura em inglês" path="english.hero.signature"/></div></Panel>
+      <Panel title="A Jornada em inglês"><HeadingFields path="english.journey.heading"/>{draft.english.journey.paragraphs.map((_, index) => <div className="admin-paragraph" key={index}><Field label={'Parágrafo em inglês ' + (index + 1)} path={'english.journey.paragraphs.' + index} area/>{draft.english.journey.paragraphs.length > 1 && <button type="button" className="admin-inline-button danger" onClick={() => update('english.journey.paragraphs', draft.english.journey.paragraphs.filter((_, position) => position !== index))}>Remover parágrafo</button>}</div>)}<button type="button" className="admin-button admin-button-light" disabled={draft.english.journey.paragraphs.length >= 20} onClick={() => update('english.journey.paragraphs', [...draft.english.journey.paragraphs, ''])}><Icon name="plus"/>Adicionar parágrafo em inglês</button><Field label="Descrição da imagem da Jornada em inglês" path="english.journey.alt"/><Field label="Legenda da Jornada em inglês" path="english.journey.caption"/></Panel>
+      <Panel title="Portfólio em inglês"><HeadingFields path="english.portfolio.heading"/><Field label="Introdução do portfólio em inglês" path="english.portfolio.intro" area/><Field label="Acervo vazio em inglês" path="english.portfolio.empty"/></Panel>
+      <Panel title="Habilidades em inglês"><HeadingFields path="english.arsenal.heading"/><Field label="Subtítulo do arsenal em inglês" path="english.arsenal.subtitle"/><Field label="Introdução do arsenal em inglês" path="english.arsenal.intro" area/>{draft.english.arsenal.skills.map((skill, index) => <details className="admin-skill" key={index}><summary>{index + 1} — {skill.title}</summary><Field label="Nome da habilidade em inglês" path={'english.arsenal.skills.' + index + '.title'}/><Field label="Descrição da habilidade em inglês" path={'english.arsenal.skills.' + index + '.description'} area/></details>)}</Panel>
+      <Panel title="Apresentação dos feedbacks em inglês"><HeadingFields path="english.feedbacks.heading"/><Field label="Introdução dos feedbacks em inglês" path="english.feedbacks.intro" area/><Field label="Feedbacks vazios em inglês" path="english.feedbacks.empty"/><Field label="Nota sobre os prints originais em inglês" path="english.feedbacks.originalNote"/></Panel>
+      <Panel title="Contato e rodapé em inglês"><HeadingFields path="english.contact.heading"/><Field label="Texto de contato em inglês" path="english.contact.text" area/><Field label="Botão de contato em inglês" path="english.contact.cta"/><Field label="Contato indisponível em inglês" path="english.contact.unavailable"/><Field label="Descrição da imagem de contato em inglês" path="english.contact.alt"/><Field label="Legenda final em inglês" path="english.contact.caption" area/><Field label="Descrição do rodapé em inglês" path="english.footer.description"/><Field label="Frase do rodapé em inglês" path="english.footer.tagline"/></Panel>
+    </>}
+    {section === 'videos' && <>
+      <Panel title="Vídeo principal com link independente" description="Estes textos são usados quando o destaque não está vinculado a um vídeo do acervo."><Field label="Título do vídeo principal em inglês" path="english.hero.videoTitle"/><Field label="Categoria do vídeo principal em inglês" path="english.hero.videoCategory"/><Field label="Descrição do vídeo principal em inglês" path="english.hero.videoDescription" area/></Panel>
+      <Panel title="Traduções dos vídeos" description="Adicione ou troque os links na aba Vídeos. Aqui você altera só os textos em inglês. Um título ou categoria em branco mantém o original.">{draft.english.portfolio.videos.map((video, index) => <details className="admin-skill" key={video.id}><summary>{index + 1} — {draft.portfolio.videos.find(item => item.id === video.id)?.title || 'Novo vídeo'}</summary><Field label="Título do vídeo em inglês" path={'english.portfolio.videos.' + index + '.title'}/><Field label="Categoria do vídeo em inglês" path={'english.portfolio.videos.' + index + '.category'}/><Field label="Descrição do vídeo em inglês" path={'english.portfolio.videos.' + index + '.description'} area/></details>)}{!draft.portfolio.videos.length && <p>Adicione vídeos na aba Vídeos para traduzir os títulos aqui.</p>}</Panel>
+    </>}
+    {section === 'feedbacks' && <Panel title="Traduções dos feedbacks" description="Os prints originais e os nomes são preservados. Se quiser, traduza fielmente o texto de cada depoimento; uma tradução em branco mantém o original. Adicione ou remova registros na aba Feedbacks.">{draft.english.feedbacks.items.map((item, index) => <details className="admin-skill" key={item.id}><summary>Feedback {index + 1}{draft.feedbacks.items.find(entry => entry.id === item.id)?.name ? ' — ' + draft.feedbacks.items.find(entry => entry.id === item.id)?.name : ''}</summary><Field label="Descrição da imagem em inglês" path={'english.feedbacks.items.' + index + '.alt'}/><Field label="Depoimento em inglês" path={'english.feedbacks.items.' + index + '.text'} area/><Field label="Identificação em inglês" path={'english.feedbacks.items.' + index + '.role'}/></details>)}{!draft.feedbacks.items.length && <p>Adicione feedbacks na aba Feedbacks para traduzi-los aqui.</p>}</Panel>}
+  </>
+}
+
+function Preview({ draft, english = false }: { draft: SiteContent; english?: boolean }) {
   const frame = useRef<HTMLIFrameElement>(null)
   const box = useRef<HTMLDivElement>(null)
   const latest = useRef(draft)
@@ -86,8 +113,8 @@ function Preview({ draft }: { draft: SiteContent }) {
   }, [])
   useEffect(() => { const timer = setTimeout(send, 100); return () => clearTimeout(timer) }, [draft])
   const scale = Math.min(1, available / width)
-  return <aside className="admin-preview" aria-label="Prévia do site"><div className="admin-preview-heading"><div><Icon name="eye"/><strong>Prévia ao vivo</strong></div><label>Tamanho<select value={width} onChange={event => setWidth(Number(event.target.value))}><option value={390}>Celular</option><option value={768}>Tablet</option><option value={1440}>Desktop</option></select></label></div>
-    <p>Confira antes de salvar.</p><div ref={box} className="admin-preview-viewport" style={{ height: Math.round(900 * scale) }}><iframe ref={frame} title="Prévia personalizável do portfólio" src="/?preview=admin" onLoad={send} style={{ width, height: 900, transform: 'scale(' + scale + ')', transformOrigin: 'top left' }}/></div>
+  return <aside className="admin-preview" aria-label="Prévia do site"><div className="admin-preview-heading"><div><Icon name="eye"/><strong>{english ? 'Prévia em inglês' : 'Prévia ao vivo'}</strong></div><label>Tamanho<select value={width} onChange={event => setWidth(Number(event.target.value))}><option value={390}>Celular</option><option value={768}>Tablet</option><option value={1440}>Desktop</option></select></label></div>
+    <p>Confira antes de salvar.</p><div ref={box} className="admin-preview-viewport" style={{ height: Math.round(900 * scale) }}><iframe ref={frame} title="Prévia personalizável do portfólio" src={(english ? '/en' : '/') + '?preview=admin'} onLoad={send} style={{ width, height: 900, transform: 'scale(' + scale + ')', transformOrigin: 'top left' }}/></div>
   </aside>
 }
 
@@ -108,6 +135,7 @@ export default function Admin() {
   const [openFeedback, setOpenFeedback] = useState('')
   const [search, setSearch] = useState('')
   const loadSequence = useRef(0)
+  const draftTimer = useRef<ReturnType<typeof setTimeout>>()
   const busy = loading || saving || uploads > 0
   const dirty = JSON.stringify(draft) !== baseline
   const notify = (message: string, problem = false) => { setNotice(message); setError(problem) }
@@ -124,7 +152,11 @@ export default function Admin() {
       if (restoreDraft) {
         try {
           const previous = JSON.parse(localStorage.getItem(draftKey) || 'null')
-          if (previous?.content) { next = parseContent(previous.content, true); nextRevision = previous.revision ?? null; notify('Seu rascunho foi recuperado. Confira a prévia antes de salvar.') }
+          if (previous?.content) {
+            const recovered = parseContent(previous.content, true)
+            if (JSON.stringify(recovered) !== JSON.stringify(published)) { next = recovered; nextRevision = previous.revision ?? null; notify('Seu rascunho foi recuperado. Confira a prévia antes de salvar.') }
+            else localStorage.removeItem(draftKey)
+          }
         } catch { notify('O rascunho antigo não pôde ser recuperado. O conteúdo salvo foi carregado.') }
       }
       setDraft(cloneContent(next)); setBaseline(JSON.stringify(published)); setRevision(nextRevision); setUpdatedAt(result.updatedAt)
@@ -133,10 +165,11 @@ export default function Admin() {
   }
   useEffect(() => { document.title = 'Painel de administração — O Grimório do Editor'; void load(); return () => { loadSequence.current++ } }, [])
   useEffect(() => {
-    if (loading) return
+    if (loading || saving) return
     const timer = setTimeout(() => { try { if (dirty) localStorage.setItem(draftKey, JSON.stringify({ content: draft, revision })); else localStorage.removeItem(draftKey) } catch { if (dirty) notify('O navegador não conseguiu guardar o rascunho. Exporte uma cópia na aba Backup.', true) } }, 300)
+    draftTimer.current = timer
     return () => clearTimeout(timer)
-  }, [draft, revision, dirty, loading])
+  }, [draft, revision, dirty, loading, saving])
   useEffect(() => {
     const beforeLeave = (event: BeforeUnloadEvent) => { if (dirty) { event.preventDefault(); event.returnValue = '' } }
     window.addEventListener('beforeunload', beforeLeave)
@@ -152,6 +185,8 @@ export default function Admin() {
     return next
   })
   const save = async () => {
+    clearTimeout(draftTimer.current)
+    try { localStorage.setItem(draftKey, JSON.stringify({ content: draft, revision })) } catch { /* The server save can proceed without local storage. */ }
     setSaving(true); setNotice('')
     try {
       const result = await saveContent(parseContent(draft), revision)
@@ -195,7 +230,7 @@ export default function Admin() {
   const activeTab = tabs.find(item => item.id === tab)!
 
   return <EditorContext.Provider value={{ draft, update, pending: change => setUploads(current => current + change), notify }}><div className={'admin-shell' + (preview ? ' has-preview' : '')}>
-    <aside className="admin-sidebar"><a className="admin-brand" href="/admin"><span className="admin-monogram">G</span><span>O Grimório<span>Painel do editor</span></span></a><div className="admin-sidebar-label">Seu espaço de criação</div><nav aria-label="Seções do painel">{tabs.map(item => <button key={item.id} type="button" aria-label={item.label} className={tab === item.id ? 'active' : ''} aria-current={tab === item.id ? 'page' : undefined} onClick={() => { setTab(item.id); setSearch('') }}><Icon name={item.id}/>{item.label}{item.id === 'videos' && <small>{draft.portfolio.videos.length}</small>}{item.id === 'feedbacks' && <small>{draft.feedbacks.items.length}</small>}</button>)}</nav><div className="admin-demo"><span className="admin-status-dot"/>Versão de demonstração<small>Acesso ao painel sem senha.</small></div><a className="admin-site-link" href="/" target="_blank" rel="noreferrer">Abrir meu site<Icon name="arrow"/></a></aside>
+    <aside className="admin-sidebar"><a className="admin-brand" href="/admin"><span className="admin-monogram">G</span><span>O Grimório<span>Painel do editor</span></span></a><div className="admin-sidebar-label">Seu espaço de criação</div><nav aria-label="Seções do painel">{tabs.map(item => <button key={item.id} type="button" aria-label={item.label} className={tab === item.id ? 'active' : ''} aria-current={tab === item.id ? 'page' : undefined} onClick={() => { if (item.id === 'english') setDraft(current => syncEnglishCollections(cloneContent(current))); setTab(item.id); setSearch('') }}><Icon name={item.id}/>{item.label}{item.id === 'videos' && <small>{draft.portfolio.videos.length}</small>}{item.id === 'feedbacks' && <small>{draft.feedbacks.items.length}</small>}</button>)}</nav><div className="admin-demo"><span className="admin-status-dot"/>Versão de demonstração<small>Acesso ao painel sem senha.</small></div><a className="admin-site-link" href="/" target="_blank" rel="noreferrer">Abrir meu site<Icon name="arrow"/></a></aside>
     <div className="admin-workspace"><header className="admin-topbar"><div><span className={'admin-save-status' + (dirty ? ' is-dirty' : '')}><span/>{loading ? 'Carregando conteúdo…' : saving ? 'Salvando…' : uploads ? 'Enviando imagem…' : dirty ? 'Alterações não salvas' : 'Conteúdo salvo'}</span>{updatedAt && <small>Último salvamento: {new Date(updatedAt).toLocaleString('pt-BR')}</small>}</div><div className="admin-topbar-actions"><button className="admin-button admin-button-light" type="button" aria-pressed={preview} onClick={() => setPreview(!preview)}><Icon name="eye"/>{preview ? 'Ocultar prévia' : 'Ver prévia'}</button><button className="admin-button admin-button-primary" type="submit" form="admin-editor" disabled={busy || loadError || !dirty}><Icon name="save"/>{saving ? 'Salvando…' : 'Salvar alterações'}</button></div></header>
       <main className="admin-main"><div className="admin-page-heading"><span className="admin-overline">ADMINISTRAÇÃO DO SITE</span><h1>{activeTab.label}</h1><p>{activeTab.subtitle}</p></div>
         {notice && <div className={'admin-notice' + (error ? ' is-error' : '')} role={error ? 'alert' : 'status'}>{notice}{loadError && <button type="button" className="admin-inline-button" onClick={() => void load()}>Tentar novamente</button>}</div>}
@@ -236,12 +271,13 @@ export default function Admin() {
           <Panel title="Imagens e textura"><ImageField label="Cenário da abertura no computador" path="hero.desktopBackdrop"/><ImageField label="Imagem da Jornada" path="journey.image"/><Field label="Descrição da imagem da Jornada" path="journey.alt"/><ImageField label="Imagem do encerramento no celular" path="contact.image"/><ImageField label="Imagem do encerramento no computador" path="contact.desktopImage"/><Field label="Descrição da imagem do encerramento" path="contact.alt"/><ImageField label="Textura do pergaminho" path="appearance.texture"/></Panel>
           <Panel title="Seções e navegação" description="Escolha as seções exibidas e os nomes que aparecem no menu.">{(Object.keys(sectionNames) as SectionKey[]).map(key => <div className="admin-section-setting" key={key}><label className="admin-switch"><input type="checkbox" checked={draft.visible[key]} onChange={event => update('visible.' + key, event.target.checked)}/><span/><strong>Exibir {sectionNames[key]}</strong></label><Field label={'Nome no menu: ' + sectionNames[key]} path={'navigation.' + key}/></div>)}</Panel>
         </>}
+        {tab === 'english' && <EnglishEditor/>}
         {tab === 'backup' && <>
           <Panel title="Exportar meu conteúdo" description="Baixe uma cópia dos textos, links, feedbacks e configurações atuais."><button type="button" className="admin-button admin-button-primary" onClick={exportBackup}><Icon name="backup"/>Exportar backup</button></Panel>
           <Panel title="Importar um backup" description="A importação abre o conteúdo no rascunho. Use Salvar alterações para aplicar ao site."><label className="admin-button admin-button-light admin-upload"><Icon name="upload"/>Selecionar arquivo JSON<input type="file" accept="application/json,.json" onChange={async event => { const file = event.target.files?.[0]; event.target.value = ''; if (!file) return; try { if (file.size > 1_000_000) throw new Error('O arquivo de backup deve ter até 1 MB.'); const data = JSON.parse(await file.text()); setDraft(parseContent(data.content || data, true)); notify('Backup importado no rascunho. Confira a prévia e salve para aplicar.') } catch (problem) { notify('Não foi possível importar o backup. ' + (problem as Error).message, true) } }}/></label></Panel>
           <Panel title="Descartar o rascunho" description="Carregue novamente a última versão salva no site."><button type="button" className="admin-button admin-button-light" onClick={() => { if (!dirty || window.confirm('Descartar as alterações não salvas e recarregar o conteúdo do site?')) { localStorage.removeItem(draftKey); void load(false); notify('Conteúdo salvo recarregado.') } }}>Recarregar conteúdo salvo</button></Panel>
         </>}
-        </fieldset></form>{preview && <Preview draft={draft}/>}</div>
+        </fieldset></form>{preview && <Preview draft={draft} english={tab === 'english'}/>}</div>
       </main><footer className="admin-footer">O Grimório do Editor · Administração de conteúdo</footer>
     </div>
   </div></EditorContext.Provider>

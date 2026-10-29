@@ -1,3 +1,5 @@
+import { englishDefaults, type EnglishContent } from '../data/english.js'
+
 export type Heading = { prelude: string; title: string }
 export type VideoEntry = { id: string; title: string; url: string; category: string; description: string; poster: string; format: 'portrait' | 'landscape' }
 export type FeedbackEntry = { id: string; image: string; alt: string; text: string; name: string; role: string }
@@ -15,6 +17,7 @@ export type SiteContent = {
   contact: { heading: Heading; text: string; cta: string; unavailable: string; image: string; desktopImage: string; alt: string; caption: string }
   footer: { description: string; tagline: string }
   appearance: { paper: string; ink: string; gold: string; accent: string; night: string; headingFont: string; bodyFont: string; texture: string }
+  english: EnglishContent
 }
 
 export function youtubeId(url: string): string | undefined {
@@ -64,10 +67,23 @@ const contentRule: Rule = { fields: {
   appearance: { fields: { paper: { type: 'color' }, ink: { type: 'color' }, gold: { type: 'color' }, accent: { type: 'color' }, night: { type: 'color' }, headingFont: { type: 'text', choices: ['Cinzel', 'Georgia', 'Lora'] }, bodyFont: { type: 'text', choices: ['Lora', 'Georgia', 'Cinzel'] }, texture: url } },
 } }
 
+const englishRule: Rule = { fields: {
+  general: { fields: { name: text(true, 120), role: text(true, 160), message: text(false, 1000) } },
+  navigation: { fields: Object.fromEntries(sections.map(key => [key, text(true, 80)])) },
+  hero: { fields: { title: text(true, 500), description: text(), cta: text(true, 120), tagline: text(false, 240), signature: text(false, 160), videoTitle: text(true, 240), videoCategory: text(false, 100), videoDescription: text() } },
+  journey: { fields: { heading, paragraphs: { items: text(true), min: 1, max: 20 }, alt: text(false, 500), caption: text(false, 500) } },
+  portfolio: { fields: { heading, intro: text(), empty: text(false, 500), videos: { items: { fields: { id: text(true, 100), title: text(false, 240), category: text(false, 100), description: text() } }, max: 100 } } },
+  arsenal: { fields: { heading, subtitle: text(false, 500), intro: text(), skills: { items: { fields: { title: text(true, 160), description: text(true) } }, min: 7, max: 7 } } },
+  feedbacks: { fields: { heading, intro: text(), empty: text(false, 500), originalNote: text(false, 500), items: { items: { fields: { id: text(true, 100), alt: text(false, 500), text: text(), role: text(false, 160) } }, max: 200 } } },
+  contact: { fields: { heading, text: text(), cta: text(true, 160), unavailable: text(false, 500), alt: text(false, 500), caption: text(false, 500) } },
+  footer: { fields: { description: text(false, 500), tagline: text(false, 500) } },
+} }
+
 function fieldName(path: string): string {
   const labels: Record<string, string> = { site: 'conteúdo', general: 'Identidade', name: 'nome', author: 'profissional', role: 'identificação', channel: 'canal', message: 'mensagem', navigation: 'Menu', visible: 'Seções', hero: 'Abertura', title: 'título', description: 'descrição', cta: 'botão', tagline: 'frase', signature: 'assinatura', featuredId: 'vídeo em destaque', video: 'Vídeo principal', journey: 'Jornada', paragraphs: 'parágrafos', image: 'imagem', alt: 'descrição da imagem', caption: 'legenda', heading: 'Cabeçalho', prelude: 'introdução do título', portfolio: 'Portfólio', intro: 'introdução', empty: 'mensagem de lista vazia', videos: 'Vídeos', id: 'identificação do item', url: 'link', category: 'categoria', poster: 'capa', format: 'formato', arsenal: 'Arsenal', subtitle: 'subtítulo', skills: 'Habilidades', symbol: 'símbolo', feedbacks: 'Feedbacks', items: 'Itens', text: 'texto', contact: 'Contato', unavailable: 'mensagem de indisponibilidade', footer: 'Rodapé', appearance: 'Aparência', paper: 'pergaminho', ink: 'texto', gold: 'dourado', accent: 'bordô', night: 'fundo escuro', headingFont: 'fonte dos títulos', bodyFont: 'fonte dos textos', texture: 'textura' }
   labels.desktopBackdrop = 'cenário da abertura no computador'
   labels.desktopImage = 'imagem no computador'
+  labels.english = 'Versão em inglês'
   return path.replace(/^site\./, '').split(/[.\[\]]+/).filter(Boolean).map(part => labels[part] || part).join(' › ')
 }
 
@@ -99,6 +115,12 @@ export function parseContent(value: unknown, draft = false): SiteContent {
     input = { ...value, hero: { ...previous.hero, desktopBackdrop: previous.hero?.desktopBackdrop ?? '/assets/art/hero-editor-desktop.webp' }, contact: { ...previous.contact, desktopImage: previous.contact?.desktopImage ?? (previous.contact?.image === '/assets/art/epilogue-desk.webp' ? '/assets/art/epilogue-desk-desktop.webp' : '') } }
   }
   const content = validate(input, contentRule, 'site', draft) as SiteContent
+  const translation = value && typeof value === 'object' ? (value as { english?: unknown }).english : undefined
+  content.english = translation === undefined ? JSON.parse(JSON.stringify(englishDefaults)) : validate(translation, englishRule, 'english', draft) as EnglishContent
+  for (const collection of [content.english.portfolio.videos, content.english.feedbacks.items]) {
+    if (new Set(collection.map(item => item.id)).size !== collection.length) throw new Error('Há identificadores repetidos nas traduções em inglês.')
+  }
+  syncEnglishCollections(content)
   for (const collection of [content.portfolio.videos, content.feedbacks.items]) {
     if (new Set(collection.map(item => item.id)).size !== collection.length) throw new Error('Há identificadores repetidos na lista. Importe um arquivo de backup válido.')
   }
@@ -106,6 +128,14 @@ export function parseContent(value: unknown, draft = false): SiteContent {
     content.feedbacks.items.forEach((item, index) => { if (!item.image && !item.text.trim()) throw new Error(`Adicione uma imagem ou um texto ao feedback ${index + 1}.`) })
     if (content.general.whatsapp && !/^\+?[\d\s()-]{8,32}$/.test(content.general.whatsapp)) throw new Error('Confira o WhatsApp e inclua o DDI e DDD.')
   }
+  return content
+}
+
+export function syncEnglishCollections(content: SiteContent): SiteContent {
+  const videos = new Map(content.english.portfolio.videos.map(item => [item.id, item]))
+  content.english.portfolio.videos = content.portfolio.videos.map(video => videos.get(video.id) || { id: video.id, title: '', category: '', description: '' })
+  const feedbacks = new Map(content.english.feedbacks.items.map(item => [item.id, item]))
+  content.english.feedbacks.items = content.feedbacks.items.map(item => feedbacks.get(item.id) || { id: item.id, alt: '', text: '', role: '' })
   return content
 }
 

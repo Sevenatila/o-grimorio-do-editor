@@ -26,6 +26,8 @@ Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes
 
 ## Composição e responsividade
 
+O menu de computador usa agora 13px, com 12px entre 1050 e 1199px, mantendo distância entre marca, links e seletor PT/EN. A versão em inglês mantém a direção de arte e as capitulares calculadas pela primeira letra real da frase traduzida. A troca de idioma fica visível fora do menu recolhido no celular. Interfaces, estados dos vídeos, modal de feedback, metadados e textos acessíveis acompanham o idioma; os originais de mídia e as conversas fornecidas continuam preservados.
+
 - Mobile: vídeo antes de h1 e CTA; biografia antes da gravura; acervo amplo; habilidades em duas colunas com a última ocupando toda a linha; feedback e contato em sequência.
 - Tablet: mantém a leitura vertical, amplia margens e corpo dos cards.
 - A partir de 1050px: header com navegação exposta; hero editorial em duas colunas; Jornada com texto e gravura; habilidades em três colunas; contato com cena lateral. Área máxima: 1320px.

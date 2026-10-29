@@ -9,21 +9,21 @@
       "fontSource": "google",
       "hero": {
         "x": 1,
-        "y": 98,
+        "y": 90,
         "width": 388,
         "height": 1016.765625,
         "right": 389
       },
       "heroCopy": {
         "x": 25,
-        "y": 713.71875,
+        "y": 705.71875,
         "width": 340,
         "height": 257.15625,
         "right": 365
       },
       "heroVideo": {
         "x": 55,
-        "y": 122,
+        "y": 114,
         "width": 280,
         "height": 563.71875,
         "right": 335
@@ -32,15 +32,15 @@
         "x": 1,
         "y": 1,
         "width": 388,
-        "height": 97,
+        "height": 89,
         "right": 389
       },
       "identity": {
         "x": 25,
         "y": 23,
-        "width": 227,
-        "height": 52,
-        "right": 252
+        "width": 181,
+        "height": 44,
+        "right": 206
       },
       "navigation": {
         "x": 0,
@@ -51,14 +51,14 @@
       },
       "player": {
         "x": 65,
-        "y": 159.5,
+        "y": 151.5,
         "width": 260,
         "height": 462.21875,
         "right": 325
       },
       "epilogueImage": {
         "x": 1,
-        "y": 5903.15625,
+        "y": 5895.15625,
         "width": 388,
         "height": 194,
         "right": 389
@@ -244,11 +244,11 @@
         "right": 279
       },
       "navigation": {
-        "x": 624.796875,
-        "y": 52,
-        "width": 360.203125,
-        "height": 38,
-        "right": 985
+        "x": 301,
+        "y": 51,
+        "width": 576.03125,
+        "height": 40,
+        "right": 877.03125
       },
       "player": {
         "x": 660.4375,
@@ -311,11 +311,11 @@
         "right": 358
       },
       "navigation": {
-        "x": 762.8125,
-        "y": 51.5,
-        "width": 428.1875,
-        "height": 39,
-        "right": 1191
+        "x": 390,
+        "y": 50,
+        "width": 683.03125,
+        "height": 42,
+        "right": 1073.03125
       },
       "player": {
         "x": 827.5625,
@@ -332,7 +332,7 @@
         "right": 1190
       },
       "epilogueSource": "http://127.0.0.1:5174/assets/art/epilogue-desk-desktop-720.webp",
-      "backdropSource": "http://127.0.0.1:5174/assets/art/hero-editor-desktop-1280.webp",
+      "backdropSource": "http://127.0.0.1:5174/assets/art/hero-editor-desktop.webp",
       "headingsOverflow": false,
       "failedImages": [],
       "navigationAndSources": "passed",
@@ -378,11 +378,11 @@
         "right": 366
       },
       "navigation": {
-        "x": 902,
-        "y": 51.5,
-        "width": 441,
-        "height": 39,
-        "right": 1343
+        "x": 398,
+        "y": 50,
+        "width": 827.03125,
+        "height": 42,
+        "right": 1225.03125
       },
       "player": {
         "x": 948.59375,
@@ -445,11 +445,11 @@
         "right": 582
       },
       "navigation": {
-        "x": 1161.1875,
-        "y": 59.5,
-        "width": 445.8125,
-        "height": 39,
-        "right": 1607
+        "x": 614,
+        "y": 58,
+        "width": 875.03125,
+        "height": 42,
+        "right": 1489.03125
       },
       "player": {
         "x": 1203.25,

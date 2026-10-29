@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
-import { mediaLabels, type Project } from '../data/content'
+import { type Project } from '../data/content'
+import { useLocale, useUI } from '../context/ContentContext'
 import { loadYouTubeAPI, type YouTubePlayer } from '../lib/youtube'
 import { Flourish, FrameCorners } from './Ornaments'
 import './video-card.css'
@@ -8,6 +9,8 @@ import './video-card.css'
 const playbackEvent = 'grimorio:media-play'
 
 export function VideoCard({ project, hero = false, children }: { project: Project; hero?: boolean; children?: ReactNode }) {
+  const mediaLabels = useUI().media
+  const locale = useLocale()
   const [localSource, setLocalSource] = useState('')
   const [error, setError] = useState(false)
   const [youtubeActive, setYoutubeActive] = useState(false)
@@ -51,7 +54,7 @@ export function VideoCard({ project, hero = false, children }: { project: Projec
 
     // The host owns the iframe so the API can safely destroy it, including in StrictMode.
     const iframe = document.createElement('iframe')
-    const parameters = new URLSearchParams({ enablejsapi: '1', origin: location.origin, autoplay: '0', playsinline: '1', rel: '0', hl: 'pt-BR' })
+    const parameters = new URLSearchParams({ enablejsapi: '1', origin: location.origin, autoplay: '0', playsinline: '1', rel: '0', hl: locale === 'en' ? 'en' : 'pt-BR' })
     iframe.src = `https://www.youtube-nocookie.com/embed/${project.youtubeId}?${parameters}`
     iframe.title = `YouTube — ${project.title}`
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
@@ -97,7 +100,7 @@ export function VideoCard({ project, hero = false, children }: { project: Projec
       player?.destroy()
       host.replaceChildren()
     }
-  }, [isYouTube, project.youtubeId, project.title, hero])
+  }, [isYouTube, project.youtubeId, project.title, hero, locale])
   useEffect(() => {
     if (!youtubeActive) return
     const frame = requestAnimationFrame(() => {
@@ -129,7 +132,7 @@ export function VideoCard({ project, hero = false, children }: { project: Projec
     <div id={hero ? 'demoreel-player' : undefined} className="video-frame" role="group" aria-label={project.title} tabIndex={-1}>
       {isYouTube ? <div className="youtube-player">
         <div ref={hostRef} className="youtube-host" aria-hidden={!youtubeActive}/>
-        {!youtubeActive && <button ref={launchRef} className="youtube-launch" aria-label={`Reproduzir ${project.title}`} onClick={startYouTube}>
+        {!youtubeActive && <button ref={launchRef} className="youtube-launch" aria-label={`${locale === 'en' ? 'Play' : 'Reproduzir'} ${project.title}`} onClick={startYouTube}>
           <img src={project.poster} alt="" loading={hero ? 'eager' : 'lazy'} />
           <span className="youtube-play-label">
             <span className="play-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M12 7.5 25 16 12 24.5Z" fill="currentColor"/></svg></span>
@@ -138,14 +141,14 @@ export function VideoCard({ project, hero = false, children }: { project: Projec
         </button>}
       </div> : <>
         <video ref={videoRef} controls playsInline preload="none" poster={project.poster} src={source || undefined} aria-label={project.title} onError={() => setError(true)} onPlay={announcePlayback}>
-          {project.captions && <track kind="captions" src={project.captions} srcLang="pt-BR" label="Português" default/>}
+          {project.captions && <track kind="captions" src={project.captions} srcLang="pt-BR" label={mediaLabels.captions} default/>}
         </video>
-        {(!source || error) && <div className="video-placeholder"><span className="play-mark" aria-hidden="true">▷</span><span>{error ? 'Não foi possível carregar este vídeo' : hero ? 'Seu próximo olhar começa aqui' : 'Um novo conto está por vir'}</span><small>{error ? 'Tente outro arquivo local.' : 'Vídeo pendente · prévia do player'}</small><label className="file-picker">Selecionar vídeo local<input type="file" accept="video/*" onChange={event => { const file = event.target.files?.[0]; if (file) { setError(false); setLocalSource(URL.createObjectURL(file)) } }}/></label></div>}
+        {(!source || error) && <div className="video-placeholder"><span className="play-mark" aria-hidden="true">▷</span><span>{error ? mediaLabels.error : hero ? mediaLabels.heroPending : mediaLabels.pending}</span><small>{error ? mediaLabels.tryFile : mediaLabels.missing}</small><label className="file-picker">{mediaLabels.selectFile}<input type="file" accept="video/*" onChange={event => { const file = event.target.files?.[0]; if (file) { setError(false); setLocalSource(URL.createObjectURL(file)) } }}/></label></div>}
       </>}
       <FrameCorners/>
     </div>
     {isYouTube && youtubeActive && (youtubeError || !youtubeReady) && <p className="media-note youtube-status" role="status">{youtubeError || mediaLabels.loading}</p>}
-    {localSource && <p className="media-note">Prévia local · arquivo apenas neste navegador.</p>}
+    {localSource && <p className="media-note">{mediaLabels.localPreview}</p>}
     {(!hero || isYouTube) && <div className="video-caption">
       {!hero && <><Flourish className="video-flourish"/><span className="eyebrow">{project.category}</span><h3>{project.title}</h3>{project.description && <p>{project.description}</p>}</>}
       {isYouTube && <div className="video-actions">

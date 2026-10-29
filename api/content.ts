@@ -10,7 +10,13 @@ export default async function handler(request: HttpRequest, response: HttpRespon
     const input = await body(request)
     if (input.revision !== null && typeof input.revision !== 'string') return reply(response, 400, { error: 'Recarregue o conteúdo salvo e tente novamente.' })
     let content
-    try { content = parseContent(input.content) } catch (error) { return reply(response, 400, { error: (error as Error).message }) }
+    let incoming = input.content
+    // Older open admin tabs must not erase English edits they cannot display.
+    if (incoming && typeof incoming === 'object' && !Object.hasOwn(incoming, 'english')) {
+      const current = await readSaved()
+      if (current.content?.english) incoming = { ...incoming, english: current.content.english }
+    }
+    try { content = parseContent(incoming) } catch (error) { return reply(response, 400, { error: (error as Error).message }) }
     return reply(response, 200, await writeSaved(content, input.revision as string | null))
   } catch (error) {
     if (error instanceof ConflictError) return reply(response, 409, { error: error.message })

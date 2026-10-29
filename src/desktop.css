@@ -1,6 +1,15 @@
 /* The manuscript keeps its original vertical composition below 1050px. */
 .hero-backdrop,.portfolio-playlist{display:none}
 .epilogue-art picture{display:block}
+.header .identity{min-width:0}
+.header-tools{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.language-switch{display:flex;align-items:center;gap:2px;font:11px var(--heading);letter-spacing:.5px;flex-shrink:0}
+.language-switch a{display:grid;place-items:center;min-width:30px;min-height:40px;color:var(--parchment);opacity:.65;border-bottom:1px solid transparent}
+.language-switch a[aria-current=page]{opacity:1;color:var(--display-gold,var(--gold));border-bottom-color:var(--gold)}
+.language-switch a:hover{opacity:1}
+.language-switch>span{color:var(--gold);opacity:.55}
+.feedback-original-note{font-size:12px!important;font-style:italic;opacity:.85}
+@media(max-width:599px){.header{gap:10px}.identity{gap:10px;font-size:17px}.identity-name{max-width:135px;min-width:0}.seal{width:36px;height:44px;flex-shrink:0;font-size:31px}.header-tools{gap:4px}.language-switch a{min-width:28px}.menu-toggle{width:40px}}
 
 @media(min-width:1050px){
   body{padding:24px}
@@ -8,8 +17,9 @@
   .header{padding-block:20px;gap:32px}
   .identity{flex-shrink:0;font-size:20px;gap:16px}
   .identity-name{max-width:210px}
-  .navigation{gap:clamp(16px,2vw,30px);min-width:0;flex-wrap:wrap;justify-content:flex-end}
-  .navigation a{font-size:11px}
+  .navigation{gap:clamp(16px,1.6vw,24px);min-width:0;flex:1;flex-wrap:wrap;justify-content:flex-end}
+  .navigation a{font-size:13px}
+  .header-tools{padding-left:16px;border-left:1px solid #a3874f40}
 
   .hero{isolation:isolate;padding-block:32px 24px;overflow:hidden}
   .hero-backdrop{display:block;position:absolute;inset:0;z-index:-2;pointer-events:none}
@@ -95,7 +105,7 @@
   .identity-name{max-width:155px}
   .identity{font-size:18px}
   .navigation{gap:16px}
-  .navigation a{font-size:10px}
+  .navigation a{font-size:12px}
   .hero-copy h1{font-size:34px}
   .hero-bottom{gap:12px}
   .hero-bottom .flourish{width:110px}

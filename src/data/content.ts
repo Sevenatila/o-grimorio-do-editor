@@ -1,4 +1,5 @@
 import type { SiteContent, VideoEntry } from '../lib/content-model'
+import { englishDefaults } from './english'
 
 export type Project = {
   id: string
@@ -131,6 +132,7 @@ const videoEntry = (project: Project): VideoEntry => ({ id: project.id, title: p
 
 export const defaultContent: SiteContent = {
   version: 1,
+  english: { ...englishDefaults, feedbacks: { ...englishDefaults.feedbacks, items: testimonials.map(item => ({ id: item.id, alt: '', text: '', role: '' })) } },
   general: { name: site.name, author: site.author, role: 'Editor & Storyteller', channel: site.channel, whatsapp: site.whatsapp, message: site.message },
   navigation: { journey: 'A Jornada', portfolio: 'O Acervo', arsenal: 'O Grimório', feedbacks: 'Feedbacks', contact: 'A Sua História' },
   visible: { journey: true, portfolio: true, arsenal: true, feedbacks: true, contact: true },

@@ -11,7 +11,8 @@
     "qa": "node scripts/visual-audit.mjs",
     "qa:youtube": "node scripts/youtube-playback.mjs",
     "qa:admin": "node scripts/admin-audit.mjs",
-    "qa:desktop": "node scripts/desktop-audit.mjs"
+    "qa:desktop": "node scripts/desktop-audit.mjs",
+    "qa:english": "node scripts/english-audit.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2",

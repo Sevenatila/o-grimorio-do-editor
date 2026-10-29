@@ -27,6 +27,18 @@ A prévia fica separada do conteúdo publicado. O site lê o conteúdo salvo pel
 - Subir, descer e remover organizam a lista. Remover um registro não apaga o arquivo original nem a mídia armazenada, permitindo recuperação por backup.
 - A lista aceita até 200 feedbacks. Sem itens, o site exibe a mensagem configurada.
 
+## Versão em inglês
+
+O site usa português em `/` e inglês em `/en`. O seletor PT/EN do cabeçalho permite alternar inclusive pelo teclado. Cada endereço abre diretamente seu idioma; o português continua sendo o padrão.
+
+A aba **Versão em inglês** contém Textos e navegação, Títulos dos vídeos e Textos dos feedbacks. A tradução inicial foi redigida a partir dos textos publicados, preservando os fatos, nomes e projetos existentes. Títulos, biografia, habilidades, contato, WhatsApp, rodapé, legendas e descrições acessíveis podem ser editados. A prévia muda automaticamente para inglês nessa aba.
+
+Vídeos, URLs, capas, imagens, cores e visibilidade são compartilhados. As traduções de vídeos e feedbacks são ligadas ao identificador de cada registro, mantendo a associação ao reordenar. Adicione registros nas abas Vídeos ou Feedbacks e preencha suas traduções na aba em inglês; campos de tradução vazios usam o texto original, exceto a descrição de imagens de feedback, que recebe uma descrição genérica em inglês. Não há tradução automática de conteúdo adicionado depois.
+
+Os prints continuam originais, com nota em inglês editável. Uma tradução escrita do feedback pode ser adicionada fielmente e aparece na ampliação, junto com a imagem. O idioma dos vídeos e das legendas originais não é alterado pela interface traduzida.
+
+**Salvar alterações** publica os dois idiomas juntos. O rascunho e o backup incluem as traduções. Conteúdo e backups anteriores recebem o inglês inicial; um salvamento de um painel antigo sem suporte a inglês preserva as traduções já publicadas no servidor.
+
 ## Demais configurações
 
 É possível editar identidade, títulos, descrições, parágrafos da Jornada, as sete habilidades, contato, WhatsApp, rodapé, textos do menu, imagens, textura, fontes, cores e exibição das seções. As capitulares são calculadas a partir da primeira letra do título editado.

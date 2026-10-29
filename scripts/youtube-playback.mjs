@@ -6,6 +6,8 @@ import { pathToFileURL } from 'node:url'
 
 const output = new URL(pathToFileURL(resolve(process.env.QA_OUTPUT_DIR || 'docs/screenshots/one-click')).href + '/')
 const base = process.env.QA_BASE_URL || 'http://127.0.0.1:5173/'
+const english = /^\/en(?:\/|$)/.test(new URL(base).pathname)
+const labels = english ? { back: 'Back to cover', cta: 'Watch my showreel', next: 'Next project' } : { back: 'Voltar à capa', cta: 'Assista ao demoreel', next: 'Próximo projeto' }
 const ids = ['oF7MRtebWHs', '9FwdP60SSpc', 'QstQJOrkq2k', 'rwz_finz-Y0', 'fCXZFommLOA', 'bnOoqp2OafA']
 await mkdir(output, { recursive: true })
 const browser = await chromium.launch({
@@ -44,12 +46,12 @@ try {
     results.push({ mobile, action: 'one cover click/tap', id: '9FwdP60SSpc', ...(await observePlayback(hero, '9FwdP60SSpc')) })
     console.log(`Main video: one ${mobile ? 'tap' : 'click'} with sound passed`)
 
-    await activate(hero.getByRole('button', { name: 'Voltar à capa' }))
-    await activate(page.getByRole('link', { name: 'Assista ao demoreel' }))
+    await activate(hero.getByRole('button', { name: labels.back }))
+    await activate(page.getByRole('link', { name: labels.cta }))
     results.push({ mobile, action: 'one presentation CTA click/tap', id: '9FwdP60SSpc', ...(await observePlayback(hero, '9FwdP60SSpc')) })
 
     if (!mobile) {
-      await hero.getByRole('button', { name: 'Voltar à capa' }).click()
+      await hero.getByRole('button', { name: labels.back }).click()
       await hero.locator('.youtube-launch').press('Enter')
       results.push({ mobile, action: 'one Enter key', id: '9FwdP60SSpc', ...(await observePlayback(hero, '9FwdP60SSpc')) })
     }
@@ -61,7 +63,7 @@ try {
       assert.equal(await page.locator('.hero-video.is-playing').count(), 0)
       assert.ok(await hero.frameLocator('iframe').locator('video').first().evaluate(element => element.paused), 'The previous video must stop')
       console.log(`${id}: one ${mobile ? 'tap' : 'click'} with sound passed`)
-      await activate(page.getByRole('button', { name: 'Próximo projeto', exact: true }))
+      await activate(page.getByRole('button', { name: labels.next, exact: true }))
     }
     await context.close()
   }
