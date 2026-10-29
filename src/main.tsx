@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './styles.css'
+import './desktop.css'
 import { loadFonts } from './fonts'
 import { PublishedContentProvider } from './context/ContentContext'
 

@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { mediaLabels, type Project } from '../data/content'
 import { loadYouTubeAPI, type YouTubePlayer } from '../lib/youtube'
@@ -7,7 +7,7 @@ import './video-card.css'
 
 const playbackEvent = 'grimorio:media-play'
 
-export function VideoCard({ project, hero = false }: { project: Project; hero?: boolean }) {
+export function VideoCard({ project, hero = false, children }: { project: Project; hero?: boolean; children?: ReactNode }) {
   const [localSource, setLocalSource] = useState('')
   const [error, setError] = useState(false)
   const [youtubeActive, setYoutubeActive] = useState(false)
@@ -152,6 +152,7 @@ export function VideoCard({ project, hero = false }: { project: Project; hero?: 
         {youtubeActive && <button className="video-reset" onClick={backToCover}><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m11 5-5 5 5 5M6 10h10" stroke="currentColor" strokeWidth="1.2"/></svg>{mediaLabels.backToCover}</button>}
         <a className="video-source-link" href={youtubeUrl} target="_blank" rel="noreferrer">{mediaLabels.source}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15 15 5M6 5h9v9" stroke="currentColor" strokeWidth="1.2"/></svg></a>
       </div>}
+      {children}
     </div>}
   </div>
 }

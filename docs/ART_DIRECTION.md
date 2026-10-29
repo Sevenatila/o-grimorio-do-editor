@@ -35,6 +35,14 @@ Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes
 
 ## Mídia e conteúdo
 
+### Adaptação para computador — 28/10/2026
+
+A composição desktop agora ocupa até 1440px, com menu e identidade separados, destaque de aproximadamente 650px de altura e título com largura de leitura controlada. O vídeo permanece vertical em 9:16; a arte larga é um cenário decorativo atrás do conteúdo. A assinatura e a frase de encerramento do hero passam a uma linha horizontal. A Jornada usa colunas alinhadas pelo centro, com margens e entrelinhas ajustadas.
+
+O acervo usa o espaço ao lado do player para títulos e uma lista de miniaturas dos vídeos reais, selecionáveis por mouse ou teclado. A seleção preserva o foco e a capa antes de reproduzir. O contato usa uma nova recomposição 3:2 da mesa original, sem recortar vela e pena. Imagens novas: `hero-editor-desktop` e `epilogue-desk-desktop`; originais e prompts preservados em `artwork/GENERATION.md`. A escolha responsiva usa `picture`, `source`, `srcset` e `sizes`; abaixo de 1050px o navegador mantém as artes anteriores e não baixa as variantes de desktop.
+
+Os novos campos de arte podem ser editados em Aparência no painel. Conteúdo antigo recebe apenas os valores adicionais; personalizações existentes, vídeos, feedbacks e referências permanecem preservados.
+
 As três cenas e a textura de pergaminho foram geradas com `image_gen` a pedido do usuário, seguindo a referência visual original. São ilustrações decorativas: não representam um retrato de Marcos, clientes ou resultados. Os PNGs gerados estão preservados em `artwork/generated/`, com prompts finais em `artwork/GENERATION.md`. O site usa arquivos WebP em `public/assets/art/`, incluindo variantes menores para a Jornada e o Epílogo no celular. Os antigos SVGs e as referências permanecem preservados.
 
 Os 15 prints recebidos em `public/assets/testimonials/` são exibidos no carrossel de feedbacks, com ampliação dos originais. Não se deduzem nomes, empresas ou notas a partir de contexto ambíguo. A inclusão dos prints foi solicitada explicitamente pelo usuário.

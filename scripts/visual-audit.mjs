@@ -81,9 +81,9 @@ try {
       assert.equal(await gallery.locator('.youtube-card.is-playing').count(), 0, 'Changing projects stops playback and restores the cover')
     }
     await page.getByRole('button', { name: 'Projeto anterior', exact: true }).click()
-    assert.match(await gallery.locator('img').getAttribute('src'), /bnOoqp2OafA/)
+    assert.match(await gallery.locator('.youtube-launch img').getAttribute('src'), /bnOoqp2OafA/)
     await page.getByRole('button', { name: 'Shorts', exact: true }).click()
-    assert.match(await gallery.locator('img').getAttribute('src'), /oF7MRtebWHs/)
+    assert.match(await gallery.locator('.youtube-launch img').getAttribute('src'), /oF7MRtebWHs/)
     assert.equal(await page.getByRole('button', { name: 'Shorts', exact: true }).getAttribute('aria-pressed'), 'true')
     await page.getByRole('button', { name: 'Todos', exact: true }).click()
     assert.equal(await page.locator('.feedback-card').count(), 15)

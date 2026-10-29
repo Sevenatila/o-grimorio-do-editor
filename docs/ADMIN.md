@@ -31,6 +31,8 @@ A prévia fica separada do conteúdo publicado. O site lê o conteúdo salvo pel
 
 É possível editar identidade, títulos, descrições, parágrafos da Jornada, as sete habilidades, contato, WhatsApp, rodapé, textos do menu, imagens, textura, fontes, cores e exibição das seções. As capitulares são calculadas a partir da primeira letra do título editado.
 
+Em Aparência → Imagens e textura, o cenário da abertura no computador e a imagem do encerramento no computador têm campos próprios. O cenário é decorativo e não substitui a capa do vídeo. A imagem de encerramento do celular mantém seu enquadramento original; a variante de computador aparece a partir de 1050px. Campos novos são preenchidos ao abrir conteúdo ou backup antigo, preservando as demais personalizações. Se a imagem de contato já era personalizada, ela continua sendo usada até você configurar uma variante de computador.
+
 A aba Backup exporta o rascunho em JSON e importa um arquivo válido para revisão. A importação só vai ao site depois de salvar. Recarregar conteúdo salvo descarta o rascunho após confirmação.
 
 ## Persistência

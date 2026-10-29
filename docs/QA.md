@@ -1,5 +1,14 @@
 # Primeira auditoria — 28/10/2026
 
+## Revisão da versão para computador — 28/10/2026
+
+- Layout desktop revisto com limite de 1440px, menu sem sobreposição, colunas com largura mínima controlada e destaque reduzido de aproximadamente 840 para 650px, medido com fontes Google carregadas. Em 1050, 1280, 1440 e 1920px, o menu fica separado da marca e o destaque usa cerca de 650px de altura.
+- Geradas duas recomposições com `image_gen` integrada a partir das artes originais: cenário largo da abertura e mesa de contato em 3:2. Novos PNGs em `artwork/generated/`, WebPs responsivos em `public/assets/art/`, prompts completos em `artwork/GENERATION.md`. Referências e artes anteriores preservadas.
+- `npm run qa:desktop`: aprovado em 390, 768, 1024, 1050, 1280, 1440 e 1920px. Verificados overflow, títulos, separação do menu, proporção 9:16 do vídeo, imagem de contato 3:2 no desktop e 2:1 no mobile, imagens decodificadas e seleção dos arquivos corretos. Nenhuma imagem de desktop foi baixada abaixo de 1050px.
+- A lista de miniaturas seleciona os vídeos reais com mouse e Enter, preservando foco. Conteúdo antigo sem campos novos recebeu a arte padrão; título personalizado e imagem de contato personalizada foram preservados em uma resposta de API simulada, sem gravar dados fictícios.
+- `npm run qa`: aprovado nas três larguras exigidas, incluindo capitulares, sete habilidades, ordem das seções, menu, acervo, feedbacks e contato. `npm run qa:admin`: salvamento, rascunho, vídeos, feedbacks, upload, backup, tema, conflitos e layout aprovados. `npm run qa:youtube`: 17 casos de clique/toque únicos com som aprovados.
+- Capturas completas e detalhes em `docs/screenshots/desktop/`; versões 390, 768, 1440 e 1920 abertas e examinadas, assim como detalhes do destaque, acervo e contato. O novo audit permite fontes Google e bloqueia os demais serviços externos; o audit visual geral continua cobrindo fallback de fontes. Limite: mobile emulado, sem aparelho físico.
+
 ## Painel de administração — 28/10/2026
 
 - Produção confirmada em `https://o-grimorio-do-editor.vercel.app/admin`: botão Salvar alterações usado duas vezes, leitura imediata pela API e conteúdo confirmado em outro navegador. Os seis vídeos e quinze feedbacks originais foram preservados. O teste do botão alternou somente a capitalização de uma cor hexadecimal equivalente e restaurou o valor original.

@@ -47,6 +47,10 @@ export const mediaLabels = {
 
 export const artwork = {
   heroCover: '/assets/art/hero-editor.webp',
+  heroDesktop: {
+    src: '/assets/art/hero-editor-desktop.webp',
+    srcSet: '/assets/art/hero-editor-desktop-1280.webp 1279w, /assets/art/hero-editor-desktop.webp 1919w',
+  },
   journey: {
     src: '/assets/art/journey-city.webp',
     srcSet: '/assets/art/journey-city-mobile.webp 800w, /assets/art/journey-city.webp 1600w',
@@ -54,6 +58,8 @@ export const artwork = {
   },
   epilogue: {
     src: '/assets/art/epilogue-desk.webp',
+    desktopSrc: '/assets/art/epilogue-desk-desktop.webp',
+    desktopSrcSet: '/assets/art/epilogue-desk-desktop-720.webp 720w, /assets/art/epilogue-desk-desktop.webp 1200w',
     srcSet: '/assets/art/epilogue-desk-mobile.webp 800w, /assets/art/epilogue-desk.webp 1600w',
     alt: 'Ilustração de livros antigos, pergaminho em branco, pena e vela acesa sobre uma mesa de madeira.',
   },
@@ -128,12 +134,12 @@ export const defaultContent: SiteContent = {
   general: { name: site.name, author: site.author, role: 'Editor & Storyteller', channel: site.channel, whatsapp: site.whatsapp, message: site.message },
   navigation: { journey: 'A Jornada', portfolio: 'O Acervo', arsenal: 'O Grimório', feedbacks: 'Feedbacks', contact: 'A Sua História' },
   visible: { journey: true, portfolio: true, arsenal: true, feedbacks: true, contact: true },
-  hero: { title: site.hero.title, description: site.hero.description, cta: 'Assista ao demoreel', tagline: 'A mesma essência, novos horizontes.', signature: 'Audiovisual com propósito', featuredId: projects[1].id, video: videoEntry(site.hero.video) },
+  hero: { title: site.hero.title, description: site.hero.description, cta: 'Assista ao demoreel', tagline: 'A mesma essência, novos horizontes.', signature: 'Audiovisual com propósito', featuredId: projects[1].id, video: videoEntry(site.hero.video), desktopBackdrop: artwork.heroDesktop.src },
   journey: { heading: { prelude: 'De onde vim e onde cheguei:', title: 'A Jornada' }, paragraphs: site.journey, image: artwork.journey.src, alt: artwork.journey.alt, caption: 'O cenário muda. A essência permanece.' },
   portfolio: { heading: { prelude: 'Acervo de contos', title: 'Portfólio' }, intro: 'Conheça alguns dos projetos que ganharam vida através da edição.', empty: 'Novas histórias serão adicionadas em breve.', videos: projects.map(videoEntry) },
   arsenal: { heading: { prelude: 'O meu arsenal', title: 'O Grimório' }, subtitle: 'Como eu construo o seu vídeo.', intro: site.arsenal, skills },
   feedbacks: { heading: { prelude: 'Feedbacks', title: 'Dos Clientes' }, intro: 'Histórias reais de quem já confiou no meu trabalho.', empty: 'Novos feedbacks serão adicionados em breve.', items: testimonials.map(item => ({ ...item, text: '', name: '', role: '' })) },
-  contact: { heading: { prelude: 'Vamos contar', title: 'A Sua História?' }, text: site.contact, cta: 'Escreva o Seu Próximo Capítulo', unavailable: 'O contato por WhatsApp será disponibilizado em breve.', image: artwork.epilogue.src, alt: artwork.epilogue.alt, caption: 'Todo grande projeto começa\ncom uma boa conversa.' },
+  contact: { heading: { prelude: 'Vamos contar', title: 'A Sua História?' }, text: site.contact, cta: 'Escreva o Seu Próximo Capítulo', unavailable: 'O contato por WhatsApp será disponibilizado em breve.', image: artwork.epilogue.src, desktopImage: artwork.epilogue.desktopSrc, alt: artwork.epilogue.alt, caption: 'Todo grande projeto começa\ncom uma boa conversa.' },
   footer: { description: 'Marcos · Edição de vídeo & Storytelling', tagline: 'Histórias feitas para permanecer.' },
   appearance: { paper: '#e8d7b3', ink: '#39291e', gold: '#a3874f', accent: '#722c32', night: '#120c09', headingFont: 'Cinzel', bodyFont: 'Lora', texture: '/assets/art/parchment.webp' },
 }

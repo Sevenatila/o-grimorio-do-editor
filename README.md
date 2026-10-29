@@ -16,6 +16,8 @@ Configure `.env` a partir de `.env.example`: `VITE_WHATSAPP_NUMBER` com DDI/DDD 
 
 Painel de administração: `/admin`, sem senha nesta versão. Edite textos, vídeos, feedbacks, imagens, aparência e contato; confira a prévia e use **Salvar alterações** para publicar. O conteúdo salvo persiste no Vercel Blob e aparece para os visitantes. Os valores originais continuam em `src/data/content.ts`. Instruções e limites em `docs/ADMIN.md`.
 
+A composição de computador usa artes próprias, mantendo as imagens anteriores no celular. Cenário da abertura e imagem de contato do computador são editáveis na aba Aparência. `npm run qa:desktop` valida sete larguras, carregamento responsivo das imagens, menu, miniaturas por mouse/teclado e compatibilidade com conteúdo antigo. Execute com o servidor local ativo e `QA_BASE_URL` apontando para ele; as evidências ficam em `docs/screenshots/desktop/`.
+
 O projeto agora inclui `package-lock.json`; use `npm ci` para uma instalação reproduzível. Em desenvolvimento sem token do Blob, o painel salva em `.tools/admin/content.json`; na Vercel, utiliza a credencial do servidor vinculada ao projeto. Fontes Google e GSAP/ScrollTrigger via CDN exigem conexão; sem ela, a página mantém fontes serifadas de fallback e conteúdo estático.
 
 Artes geradas: originais em `artwork/generated/`, arquivos usados no site em `public/assets/art/` e prompts finais em `artwork/GENERATION.md`. Caminhos e textos alternativos das cenas estão em `src/data/content.ts`. A nova capa ilustrada do destaque mantém o vídeo principal selecionado; as capas do acervo são as miniaturas oficiais em alta resolução.

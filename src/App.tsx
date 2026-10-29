@@ -37,6 +37,7 @@ function Hero() {
     else frame.querySelector<HTMLInputElement>('input')?.click()
   }
   return <section className="hero" aria-labelledby="hero-title">
+    {content.hero.desktopBackdrop && <picture className="hero-backdrop" aria-hidden="true"><source media="(min-width: 1050px)" srcSet={content.hero.desktopBackdrop === artwork.heroDesktop.src ? artwork.heroDesktop.srcSet : content.hero.desktopBackdrop} sizes="(min-width: 1500px) 1440px, 100vw"/><img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" width="1920" height="1080"/></picture>}
     <div className="hero-layout"><VideoCard key={entry.url} project={{ ...toProject(entry), id: 'demoreel' }} hero/>
       <div className="hero-copy"><p className="eyebrow">{content.general.author} · {content.general.role}</p><h1 id="hero-title">{content.hero.title}</h1><p>{content.hero.description}</p><a className="button button-primary" href="#demoreel-player" onClick={playPresentation}>{content.hero.cta}<ArrowIcon/></a></div>
     </div>
@@ -66,7 +67,7 @@ function PortfolioGallery() {
     <div className="section-intro reveal"><SectionHeading id="portfolio-title" {...content.portfolio.heading}/><p>{content.portfolio.intro}</p></div>
     {projects.length > 0 ? <>
       <div className="portfolio-tabs" role="group" aria-label="Filtrar projetos">{categories.map(item => <button key={item} aria-pressed={selectedCategory === item} className={selectedCategory === item ? 'active' : ''} onClick={() => { setCategory(item); setIndex(0) }}>{item}</button>)}</div>
-      <div className="portfolio-stage" aria-live="polite">{active && <VideoCard key={active.id + active.url} project={toProject(active)}/>}</div>
+      <div className="portfolio-stage" aria-live="polite">{active && <VideoCard key={active.id + active.url} project={toProject(active)}><div className="portfolio-playlist" role="group" aria-label="Escolher vídeo do acervo">{filtered.map((project, position) => <button key={project.id} type="button" aria-label={'Selecionar ' + project.title} aria-pressed={position === safeIndex} onClick={() => { setIndex(position); requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.portfolio-playlist button[aria-pressed="true"]')?.focus({ preventScroll: true })) }}><img src={toProject(project).poster} alt="" loading="lazy" width="48" height="64"/><span><small>{String(position + 1).padStart(2, '0')} · {project.category}</small><span>{project.title}</span></span></button>)}</div></VideoCard>}</div>
       <div className="gallery-controls"><button className="round-button" aria-label="Projeto anterior" disabled={filtered.length < 2} onClick={() => setIndex((safeIndex - 1 + filtered.length) % filtered.length)}><ArrowIcon direction="left"/></button>
         <div className="gallery-dots" aria-label="Selecionar projeto">{filtered.map((project, position) => <button key={project.id} className={position === safeIndex ? 'active' : ''} aria-label={'Ver ' + project.title} aria-current={position === safeIndex ? 'true' : undefined} onClick={() => setIndex(position)}/>)}</div>
         <button className="round-button" aria-label="Próximo projeto" disabled={filtered.length < 2} onClick={() => setIndex((safeIndex + 1) % filtered.length)}><ArrowIcon direction="right"/></button></div>
@@ -91,7 +92,7 @@ function ContactEpilogue() {
   return <section id="epilogo" className="section epilogue" aria-labelledby="epilogue-title"><div className="epilogue-copy reveal"><SectionHeading id="epilogue-title" {...content.contact.heading}/><p>{content.contact.text}</p>
     {whatsapp ? <a className="button button-primary" href={'https://wa.me/' + whatsapp + '?text=' + encodeURIComponent(content.general.message)} target="_blank" rel="noreferrer">{content.contact.cta}<ArrowIcon/></a> : <button className="button button-primary" aria-expanded={notice} aria-controls="contact-notice" onClick={() => setNotice(!notice)}>{content.contact.cta}<ArrowIcon/></button>}
     <p id="contact-notice" className="contact-notice" role="status">{notice ? content.contact.unavailable : ''}</p></div>
-    {content.contact.image && <figure className="epilogue-art"><img src={content.contact.image} srcSet={content.contact.image === artwork.epilogue.src ? artwork.epilogue.srcSet : undefined} sizes="(min-width: 1050px) 600px, 100vw" width="1600" height="800" loading="lazy" alt={content.contact.alt}/><figcaption>{content.contact.caption}</figcaption></figure>}
+    {(content.contact.image || content.contact.desktopImage) && <figure className="epilogue-art"><picture>{content.contact.desktopImage && <source media="(min-width: 1050px)" srcSet={content.contact.desktopImage === artwork.epilogue.desktopSrc ? artwork.epilogue.desktopSrcSet : content.contact.desktopImage} sizes="(min-width: 1600px) 680px, 50vw" width="1200" height="800"/>}<img src={content.contact.image || content.contact.desktopImage} srcSet={content.contact.image === artwork.epilogue.src ? artwork.epilogue.srcSet : undefined} sizes="100vw" width="1600" height="800" loading="lazy" alt={content.contact.alt}/></picture><figcaption>{content.contact.caption}</figcaption></figure>}
   </section>
 }
 

@@ -4,6 +4,30 @@ Geradas em 28/10/2026 com a ferramenta integrada `image_gen` (modo built-in). Di
 
 Os PNGs originais estão em `artwork/generated/`; os arquivos WebP otimizados usados no site estão em `public/assets/art/`. As cenas são ilustrações decorativas e não representam clientes, trabalhos comprovados ou um retrato de Marcos. Textos, botões, vídeos e depoimentos permanecem em HTML/React.
 
+## Variantes desktop — 28/10/2026
+
+Ferramenta: `image_gen` integrada, modo built-in. As duas imagens originais foram abertas antes da geração e usadas como referências explícitas. A mudança é de enquadramento e composição; os arquivos anteriores foram preservados. Exportações WebP e redimensionamento de distribuição feitos com ImageMagick, sem alterações adicionais na composição.
+
+### hero-editor-desktop
+
+- Referência: `artwork/generated/hero-editor.png`.
+- Novo original: `artwork/generated/hero-editor-desktop.png`.
+- Site: `public/assets/art/hero-editor-desktop.webp` (1919×1080) e `hero-editor-desktop-1280.webp` (1279×720).
+- Uso: cenário decorativo do destaque somente em desktop; a capa e a proporção 9:16 do vídeo continuam independentes.
+- Prompt final:
+
+Use case: stylized-concept. Asset type: responsive wide desktop background illustration for the existing O Grimório do Editor portfolio. Input image 1 is the visual reference and source scene. Create a faithful landscape recomposition of this SAME anonymous editor, medieval scriptorium, warm candle, modern monitor with abstract editing timeline, carved wooden desk, books, burgundy drapery, arches and engraved painterly chiaroscuro. Preserve the established antique copperplate engraving / detailed painterly style, palette of warm black #120c09, antique gold #a3874f, parchment and restrained burgundy. Change framing and extend the room naturally into a wide approximately 16:9 canvas. Place the editor, monitor, candle and most architectural detail in the RIGHT HALF. Keep the LEFT HALF quiet, very dark warm brown with subtle library/wood texture suitable for readable HTML text on top, with a gentle organic transition to the illuminated right side. An atmospheric room, not a graphic split panel. The full image will sit behind actual HTML text and an actual separate portrait video player, so do not draw UI elements or text overlays. The decorative editor is anonymous and is not a portrait of a real client. No words, letters, numerals, readable screen text, logos, watermark, frame, play button, website mockup, additional people, fantasy armor, magic or neon. Generate only the single wide illustration.
+
+### epilogue-desk-desktop
+
+- Referência: `artwork/generated/epilogue-desk.png`.
+- Novo original: `artwork/generated/epilogue-desk-desktop.png`.
+- Site: `public/assets/art/epilogue-desk-desktop.webp` (1200×800) e `epilogue-desk-desktop-720.webp` (720×480).
+- Uso: imagem 3:2 da coluna de contato, a partir de 1050px, com `picture` e versões adequadas ao tamanho da tela.
+- Prompt final:
+
+Use case: stylized-concept. Asset type: desktop editorial illustration for the contact epilogue of O Grimório do Editor. Input image 1 is the source scene and exact style reference. Recompose this SAME arrangement of old worn leather books, lit candle in brass holder, empty parchment scroll, quill and dark glass inkwell on a medieval wooden scriptorium desk into a landscape 3:2 composition that fills a desktop half-width panel without cropping the candle flame or feather. Preserve the copperplate engraving plus realistic painterly chiaroscuro finish, tactile leather, warm candlelight, deep brown-black #120c09 edges, sepia wood, parchment #e8d7b3 and restrained antique gold #a3874f. Keep all the main objects comfortably INSIDE the frame, with 10 percent breathing room above the candle and around the quill. Arrange the books and candle on the left, quill toward middle-right, empty parchment in the lower-middle. The lower right edge should be calm and dark for a small HTML caption. Do not create an excessively wide empty right half; make a balanced still life for a roughly 600 by 440 CSS pixel panel. No words, letters, handwriting, numerals, logos, watermark, border, controls, website mockup, people, skulls, neon or magic. Generate only this single landscape illustration.
+
 ## hero-editor
 
 - Original: `artwork/generated/hero-editor.png`
