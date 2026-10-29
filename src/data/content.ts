@@ -70,7 +70,7 @@ export const site = {
   name: 'O Grimório do Editor',
   author: 'Marcos',
   channel: 'https://www.youtube.com/@MarcosEditor-Storyteller/videos',
-  whatsapp: import.meta.env.VITE_WHATSAPP_NUMBER || '',
+  whatsapp: import.meta.env.VITE_WHATSAPP_NUMBER || '558199467686',
   message: 'Olá, Marcos! Vamos conversar sobre o próximo capítulo da minha marca?',
   hero: {
     title: 'Estratégia, estética e emoção em cada quadro.',

@@ -18,7 +18,7 @@
   .identity{flex-shrink:0;font-size:20px;gap:16px}
   .identity-name{max-width:210px}
   .navigation{gap:clamp(16px,1.6vw,24px);min-width:0;flex:1;flex-wrap:wrap;justify-content:flex-end}
-  .navigation a{font-size:13px}
+  .navigation a{font-size:15px}
   .header-tools{padding-left:16px;border-left:1px solid #a3874f40}
 
   .hero{isolation:isolate;padding-block:32px 24px;overflow:hidden}
@@ -105,7 +105,7 @@
   .identity-name{max-width:155px}
   .identity{font-size:18px}
   .navigation{gap:16px}
-  .navigation a{font-size:12px}
+  .navigation a{font-size:14px}
   .hero-copy h1{font-size:34px}
   .hero-bottom{gap:12px}
   .hero-bottom .flourish{width:110px}

@@ -1,5 +1,11 @@
 # Primeira auditoria — 28/10/2026
 
+## Menu ampliado novamente e contato pelo WhatsApp — 28/10/2026
+
+- Menu desktop passa de 13 para 15px, com 14px entre 1050 e 1199px. Conferidos português e inglês em 390, 1050, 1280, 1440 e 1920px: sem overflow e sem sobreposição entre marca, navegação e seletor.
+- WhatsApp informado pelo usuário configurado no conteúdo inicial e no conteúdo persistido da Vercel. O botão de próximo capítulo aponta para `https://wa.me/558199467686`, abre em outra aba e usa a mensagem correspondente ao idioma. A gravação alterou somente `general.whatsapp`; todos os demais campos foram comparados e preservados.
+- Compilação e `npm run qa` em 390, 768 e 1440px aprovados. O audit visual agora verifica o link de contato quando houver número e mantém a verificação do aviso quando ele estiver vazio. A conta do WhatsApp não foi contatada nem foram enviadas mensagens.
+
 ## Inglês e legibilidade do menu — 28/10/2026
 
 - Menu desktop ampliado de 11 para 13px; na faixa de 1050 a 1199px, de 10 para 12px. Seletor PT/EN visível no cabeçalho, incluindo celular. Português em `/`, inglês em `/en`, com a mesma direção de arte e os mesmos arquivos de mídia.

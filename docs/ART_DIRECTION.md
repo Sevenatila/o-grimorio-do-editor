@@ -26,7 +26,7 @@ Cinzel e Lora são carregadas primeiro de `src/assets/fonts/`, depois das fontes
 
 ## Composição e responsividade
 
-O menu de computador usa agora 13px, com 12px entre 1050 e 1199px, mantendo distância entre marca, links e seletor PT/EN. A versão em inglês mantém a direção de arte e as capitulares calculadas pela primeira letra real da frase traduzida. A troca de idioma fica visível fora do menu recolhido no celular. Interfaces, estados dos vídeos, modal de feedback, metadados e textos acessíveis acompanham o idioma; os originais de mídia e as conversas fornecidas continuam preservados.
+O menu de computador usa agora 15px, com 14px entre 1050 e 1199px, mantendo distância entre marca, links e seletor PT/EN. A versão em inglês mantém a direção de arte e as capitulares calculadas pela primeira letra real da frase traduzida. A troca de idioma fica visível fora do menu recolhido no celular. Interfaces, estados dos vídeos, modal de feedback, metadados e textos acessíveis acompanham o idioma; os originais de mídia e as conversas fornecidas continuam preservados.
 
 - Mobile: vídeo antes de h1 e CTA; biografia antes da gravura; acervo amplo; habilidades em duas colunas com a última ocupando toda a linha; feedback e contato em sequência.
 - Tablet: mantém a leitura vertical, amplia margens e corpo dos cards.
@@ -59,7 +59,7 @@ Abrir outro vídeo chama `stopVideo()` no anterior e restaura sua capa. “Volta
 
 Players HTML5 continuam disponíveis para fontes MP4/WebM, com poster, controles nativos, preload none, carregamento de arquivo local sem upload e erro legível. Configurar mídias em `src/data/content.ts`. Adicionar legendas WebVTT pelo campo `captions` quando usar arquivos diretos; no YouTube, as legendas dependem do vídeo original.
 
-WhatsApp depende de `VITE_WHATSAPP_NUMBER`. Sem número, o CTA apresenta aviso de disponibilidade futura. Não há número fictício.
+WhatsApp inicial: `558199467686`, informado pelo usuário, com override opcional por `VITE_WHATSAPP_NUMBER`. O valor salvo em Identidade e contato no painel controla o botão publicado e é compartilhado entre os idiomas; cada idioma usa sua própria mensagem inicial. Se o número for removido no painel, o CTA apresenta o aviso de disponibilidade futura.
 
 ## Engenharia e movimento
 

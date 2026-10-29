@@ -110,9 +110,18 @@ try {
     await page.getByRole('button', { name: 'Fechar feedback ampliado' }).click()
     await page.locator('.feedback-dialog').waitFor({ state: 'hidden' })
     await page.locator('#feedbacks').screenshot({ path: fileURLToPath(new URL(`feedbacks-${width}.png`, output)) })
-    await page.getByRole('button', { name: /Escreva o Seu Próximo Capítulo/i }).click()
-    assert.match(await page.locator('#contact-notice').innerText(), /disponibilizado em breve/)
-    await page.getByRole('button', { name: /Escreva o Seu Próximo Capítulo/i }).click()
+    const contact = page.locator('#epilogo .button-primary')
+    if (await contact.getAttribute('href')) {
+      const target = new URL(await contact.getAttribute('href'))
+      assert.equal(target.origin, 'https://wa.me')
+      assert.match(target.pathname, /^\/\d+$/)
+      assert.ok(target.searchParams.get('text'))
+      assert.equal(await contact.getAttribute('target'), '_blank')
+    } else {
+      await contact.click()
+      assert.match(await page.locator('#contact-notice').innerText(), /disponibilizado em breve/)
+      await contact.click()
+    }
     const order = await page.locator('main > section').evaluateAll(elements => elements.map(element => element.id || 'hero'))
     assert.deepEqual(order, ['hero', 'jornada', 'acervo', 'grimorio', 'feedbacks', 'epilogo'])
     await page.evaluate(() => window.scrollTo(0, 0))
